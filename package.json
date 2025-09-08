@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.13",
+    "tailwindcss": "^4.1.13"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.9"
+  },
+  "scripts": {
+    "tailwind:watch": "npx @tailwindcss/cli -i ./assets/css/input.css -o ./assets/css/output.css --watch",
+    "tailwind:build": "npx @tailwindcss/cli -i ./assets/css/input.css -o ./assets/css/output.css --minify",
+    "esbuild:watch": "npx esbuild ./assets/ts/index.ts --bundle --outdir=./assets/js/ --watch",
+    "esbuild:build": "npx esbuild ./assets/ts/index.ts --bundle --outdir=./assets/js/ --minify"
+  }
+}

@@ -3,18 +3,18 @@ GO_CMD := go
 TEMPL_CMD := go tool templ
 GOOSE_CMD := go tool goose
 SQLC_CMD := go tool sqlc
+AIR_CMD := go tool air
 
 # ポート設定
-SITE_PORT := 8081
 APP_PORT := 8080
-PROXY_PORT_SITE := 7081
-PROXY_PORT_APP := 7080
 
 # ディレクトリ設定
 CMD_SITE_DIR := ./cmd/web-site
 CMD_APP_DIR := ./cmd/web-app
 CSS_INPUT := ./assets/css/input.css
 CSS_OUTPUT := ./assets/css/output.css
+TS_INPUT := ./assets/ts/index.ts
+JS_OUTPUT := ./assets/js/
 
 # Air設定用変数
 AIR_BUILD_DELAY := 100
@@ -40,23 +40,14 @@ help: ## このヘルプを表示
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2}'
 
 # 開発サーバー
-templ/site: ## サイトサーバーを起動
-	@$(TEMPL_CMD) generate --watch --proxy="http://localhost:$(SITE_PORT)" --cmd="$(GO_CMD) run $(CMD_SITE_DIR)/." --open-browser=false
-
 templ/app: ## アプリサーバーを起動
-	@$(TEMPL_CMD) generate --watch --proxy="http://localhost:$(APP_PORT)" --cmd="$(GO_CMD) run $(CMD_APP_DIR)/." --open-browser=false
+	@$(TEMPL_CMD) generate --watch --proxy="http://localhost:$(APP_PORT)" --cmd="go run $(CMD_APP_DIR)/." --open-browser=false
 
 tailwind: ## TailwindCSSを実行
-	@tailwindcss -i $(CSS_INPUT) -o $(CSS_OUTPUT)
+	npx @tailwindcss/cli -i $(CSS_INPUT) -o $(CSS_OUTPUT) --watch --minify
 
-tailwind/enter: ## TailwindCSSを実行
-	@echo "TailwindCSSを実行"
-	@find . -name "*.templ" -o -name "*.go" -o -name "*.css" | entr -d -s 'sleep 0.5 && $(MAKE) tailwind'
-
-# Start development server with all watchers (app用)
 dev: ## アプリの開発環境を起動（templ + server + tailwind）
-	@read -p "Run site or app? (site/app): " choice; \
-	$(MAKE) -j2 templ/$$choice tailwind/enter
+	make -j2 templ/app tailwind
 
 # データベース管理
 mig/create: ## 新しいマイグレーションを作成
