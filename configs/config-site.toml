@@ -1,0 +1,29 @@
+# ===========================================
+# Web Site設定ファイル
+# ===========================================
+
+# サーバー設定
+[server]
+host = "localhost"
+port = 8081
+
+# データベース設定
+[database]
+host = "localhost"
+port = 5432
+user = "postgres"
+password = ""
+dbname = "myapp"
+sslmode = "disable"
+
+# アプリケーション設定
+[app]
+name = "My Go Site"
+version = "1.0.0"
+environment = "development"
+debug = true
+
+# ログ設定
+[log]
+level = "info"
+file = "logs/site.log"

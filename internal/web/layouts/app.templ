@@ -1,0 +1,18 @@
+package layouts
+
+templ AppLayout(title string) {
+	<!DOCTYPE html>
+	<html lang="ja">
+		<head>
+			<meta charset="UTF-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+			<link href="/assets/css/output.css" rel="stylesheet"/>
+			<script defer type="module" src="/assets/js/datastar-proRC5.js"></script>
+			<script defer type="module" src="/assets/js/datastar-inspector.js"></script>
+			<title>{ title }</title>
+		</head>
+		<body>
+      { children... }
+    </body>
+	</html>
+}

@@ -1,0 +1,29 @@
+# ===========================================
+# アプリケーション設定ファイル
+# ===========================================
+
+# サーバー設定
+[server]
+host = "localhost"  # サーバーのホスト名
+port = 8080         # サーバーのポート番号
+
+# データベース設定
+[database]
+host = "localhost"    # データベースホスト
+port = 5432           # PostgreSQLのデフォルトポート
+user = "postgres"     # データベースユーザー名 初期設定 (通常は環境変数から取得)
+password = "postgres" # パスワード 初期設定（通常は環境変数から取得）
+dbname = "myapp"      # データベース名
+sslmode = "disable"   # SSL接続の設定
+
+# アプリケーション設定
+[app]
+name = "My Go App"           # アプリケーション名
+version = "1.0.0"            # バージョン番号
+environment = "development"  # 実行環境（development/staging/production）
+debug = true                 # デバッグモードの有効/無効
+
+# ログ設定
+[log]
+level = "info"           # ログレベル（debug/info/warn/error）
+file = "logs/app.log"    # ログファイルのパス
