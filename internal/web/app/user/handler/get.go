@@ -3,23 +3,18 @@ package handler
 import (
 	"net/http"
 	"project/internal/db"
+	"project/internal/web/app/layouts"
 	"project/internal/web/app/user/template"
 )
 
-// Handler ハンドラー構造体
 type Handler struct {
 	DB *db.DB
 }
 
-// NewHandler 新しいハンドラーを作成
 func NewHandler(database *db.DB) *Handler {
 	return &Handler{
 		DB: database,
 	}
-}
-
-func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
-	template.LoginPage().Render(r.Context(), w)
 }
 
 func (h *Handler) Employees(w http.ResponseWriter, r *http.Request) {
@@ -31,6 +26,14 @@ func (h *Handler) Employees(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// タイトルを設定
+	title := "Employees"
+	
+	// 従業員データを渡す
+	props := template.Props{
+		Employees: employees,
+	}
+
 	// テンプレートに従業員データを渡してレンダリング
-	template.EmployeesPage(employees).Render(ctx, w)
+	layouts.AppLayout(title, props.EmployeesPage()).Render(ctx, w)
 }

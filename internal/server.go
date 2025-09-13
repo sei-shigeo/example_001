@@ -13,14 +13,13 @@ import (
 )
 
 type ServerConfig struct {
-	Port   int
-	Routes func(*http.ServeMux)
+	Port    int
+	Routes  func(*http.ServeMux)
+	DevMode bool
 }
 
-var dev = true
-
-func disableCacheInDevMode(next http.Handler) http.Handler {
-	if !dev {
+func disableCacheInDevMode(devMode bool, next http.Handler) http.Handler {
+	if !devMode {
 		return next
 	}
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -29,18 +28,17 @@ func disableCacheInDevMode(next http.Handler) http.Handler {
 	})
 }
 
-func (config ServerConfig) SetupServer() *http.Server {
-
+func (config ServerConfig) SetupServer() (*http.Server, error) {
 	err := configs.GetConfig().Validate()
 	if err != nil {
 		logger.Error("Invalid server config: %v", err)
-		os.Exit(1)
+		return nil, fmt.Errorf("invalid server config: %w", err)
 	}
 
 	mux := http.NewServeMux()
 
 	// 静的ファイルを提供
-	mux.Handle("/assets/", disableCacheInDevMode(http.StripPrefix("/assets/", http.FileServer(http.Dir("assets")))))
+	mux.Handle("/assets/", disableCacheInDevMode(config.DevMode, http.StripPrefix("/assets/", http.FileServer(http.Dir("assets")))))
 
 	if config.Routes != nil {
 		config.Routes(mux)
@@ -51,7 +49,7 @@ func (config ServerConfig) SetupServer() *http.Server {
 		Handler: mux,
 	}
 
-	return server
+	return server, nil
 }
 
 // サーバーを起動し、シグナル待機してグレースフルシャットダウンを行う
@@ -60,7 +58,6 @@ func (config ServerConfig) SetupServer() *http.Server {
 func StartServerWithGracefulShutdown(server *http.Server) error {
 	// サーバーを別のgoroutineで起動
 	go func() {
-		logger.Info("Server is running", "addr", server.Addr)
 		if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			logger.Error("Server failed to start", "error", err)
 			os.Exit(1)

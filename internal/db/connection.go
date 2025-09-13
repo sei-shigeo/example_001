@@ -6,7 +6,6 @@ import (
 	"time"
 
 	"project/configs"
-	"project/internal/logger"
 
 	"github.com/jackc/pgx/v5/pgxpool"
 )
@@ -52,12 +51,6 @@ func NewDB(config *configs.Config) (*DB, error) {
 	// Queriesインスタンスを作成
 	queries := New(pool)
 
-	logger.Info("データベース接続が確立されました",
-		"host", config.Database.Host,
-		"port", config.Database.Port,
-		"database", config.Database.DBName,
-	)
-
 	return &DB{
 		Pool:    pool,
 		Queries: queries,
@@ -68,7 +61,6 @@ func NewDB(config *configs.Config) (*DB, error) {
 func (db *DB) Close() {
 	if db.Pool != nil {
 		db.Pool.Close()
-		logger.Info("データベース接続を閉じました")
 	}
 }
 
