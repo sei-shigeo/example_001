@@ -1,0 +1,85 @@
+package template
+
+import (
+	"fmt"
+	"project/internal/db"
+	"strings"
+)
+
+type Props struct {
+	Employees []*db.Employee
+}
+
+templ (p Props) EmployeesPage() {
+	<main class="flex">
+		// Employees main container
+		<div class="flex-1 bg-blue-300 p-4">
+			<h1>Employees</h1>
+			// Create employee button
+			<button
+				id="createEmployeeButton"
+				class="bg-primary text-white rounded-md py-1.5 px-4 inline-flex items-center gap-2"
+				type="button"
+				data-on-click="$createEmployeeForm = !$createEmployeeForm"
+				data-on-click__once="@get('/employees/create')"
+			>
+				<span data-text="$createEmployeeForm ? '閉じる' : '追加'"></span>
+			</button>
+			// Create employee form
+			<div id="createEmployeeForm" data-show="$createEmployeeForm" style="display: none;"></div>
+			// Employees cards list
+			<div>
+				<p>{ len(p.Employees) }人</p>
+				<div id="employeesList" class="grid gap-2 grid-cols-[repeat(auto-fill,minmax(300px,1fr))]">
+					for _, emp := range p.Employees {
+						@EmployeeOne(emp)
+					}
+				</div>
+			</div>
+		</div>
+		// Edit employee form
+		<div id="editEmployeeForm" class="w-auto bg-gray-300 p-4" data-show="$editEmployeeForm" style="display: none;"></div>
+	</main>
+}
+
+// getFirstLetter は名前の最初の文字を大文字にして返す
+func getFirstLetter(name string) string {
+	if name == "" {
+		return "?"
+	}
+	return strings.ToUpper(string([]rune(name)[0]))
+}
+
+// EmployeeOne は従業員を表示します
+templ EmployeeOne(emp *db.Employee) {
+	<div id={ fmt.Sprintf("employee-%d", emp.ID) } class="border rounded-md p-2 flex items-center gap-4">
+		<div
+			class="flex items-center gap-4 flex-1"
+			data-on-click={ fmt.Sprintf("$currentEditId === %[1]d ? ($editEmployeeForm = true) : (@get('/employees/edit/%[1]d'), $currentEditId = %[1]d)", emp.ID) }
+		>
+			// Avatar
+			<div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center border">
+				<span class="text-sm font-medium">{ getFirstLetter(emp.Name) }</span>
+			</div>
+			// Employee details
+			<div class="flex-1 overflow-hidden">
+				// Name field
+				<div class="flex gap-1">
+					<span>name:</span>
+					<p class="flex-1 truncate">{ emp.Name }</p>
+				</div>
+				// Email field
+				<div class="flex gap-1">
+					<span>email:</span>
+					<p class="flex-1 truncate">{ emp.Email }</p>
+				</div>
+			</div>
+		</div>
+		<button
+			class="p-2 hover:bg-gray-200 rounded-md"
+			data-on-click={ fmt.Sprintf("@delete('/employees/delete/%d')", emp.ID) }
+		>
+			<span class="icon-[heroicons--trash] w-4 h-4"></span>
+		</button>
+	</div>
+}

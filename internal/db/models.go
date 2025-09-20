@@ -17,3 +17,12 @@ type Employee struct {
 	CreatedAt pgtype.Timestamptz `json:"created_at"`
 	UpdatedAt pgtype.Timestamptz `json:"updated_at"`
 }
+
+type Vehicle struct {
+	ID        int32              `json:"id"`
+	Number    string             `json:"number"`
+	IsActive  bool               `json:"is_active"`
+	DeletedAt pgtype.Timestamptz `json:"deleted_at"`
+	CreatedAt pgtype.Timestamptz `json:"created_at"`
+	UpdatedAt pgtype.Timestamptz `json:"updated_at"`
+}

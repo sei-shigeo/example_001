@@ -10,10 +10,15 @@ import (
 
 type Querier interface {
 	CreateEmployee(ctx context.Context, arg *CreateEmployeeParams) (*Employee, error)
+	CreateVehicle(ctx context.Context, number string) (*Vehicle, error)
 	DeleteEmployee(ctx context.Context, id int32) error
+	DeleteVehicle(ctx context.Context, id int32) error
 	GetEmployeeByID(ctx context.Context, id int32) (*Employee, error)
 	GetEmployees(ctx context.Context) ([]*Employee, error)
+	GetVehicleByID(ctx context.Context, id int32) (*Vehicle, error)
+	GetVehicles(ctx context.Context) ([]*Vehicle, error)
 	UpdateEmployee(ctx context.Context, arg *UpdateEmployeeParams) (*Employee, error)
+	UpdateVehicle(ctx context.Context, arg *UpdateVehicleParams) (*Vehicle, error)
 }
 
 var _ Querier = (*Queries)(nil)

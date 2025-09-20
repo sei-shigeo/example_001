@@ -5,14 +5,14 @@ import (
 	"project/internal/db"
 	"project/internal/web/app/company"
 	"project/internal/web/app/login"
-	"project/internal/web/app/user"
+	"project/internal/web/app/employees"
 )
 
 // Routes アプリケーション全体のルートを設定
 func Routes(database *db.DB) func(*http.ServeMux) {
 	return func(mux *http.ServeMux) {
 		// 各モジュールのルートを登録
-		user.RegisterRoutes(mux, database)
+		employees.RegisterRoutes(mux, database)
 		company.RegisterRoutes(mux, database)
 		login.RegisterRoutes(mux, database)
 

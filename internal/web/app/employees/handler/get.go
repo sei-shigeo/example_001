@@ -3,8 +3,8 @@ package handler
 import (
 	"net/http"
 	"project/internal/db"
+	"project/internal/web/app/employees/template"
 	"project/internal/web/app/layouts"
-	"project/internal/web/app/user/template"
 )
 
 type Handler struct {
@@ -28,12 +28,16 @@ func (h *Handler) Employees(w http.ResponseWriter, r *http.Request) {
 
 	// タイトルを設定
 	title := "Employees"
-	
+
 	// 従業員データを渡す
 	props := template.Props{
 		Employees: employees,
 	}
 
 	// テンプレートに従業員データを渡してレンダリング
-	layouts.AppLayout(title, props.EmployeesPage()).Render(ctx, w)
+	layouts.Base(title, props.EmployeesPage()).Render(ctx, w)
 }
+
+
+
+

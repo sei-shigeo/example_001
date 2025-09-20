@@ -21,5 +21,5 @@ func NewHandler(database *db.DB) *Handler {
 
 func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 
-	layouts.AppLayout("Login", template.LoginPage()).Render(r.Context(), w)
+	layouts.Base("Login", template.LoginPage()).Render(r.Context(), w)
 }
