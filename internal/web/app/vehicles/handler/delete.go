@@ -10,7 +10,7 @@ import (
 )
 
 // 削除
-func (h *Handler) DeleteEmployee(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) DeleteVehicle(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	idStr := strings.TrimSpace(r.PathValue("id"))
 	idInt, err := strconv.Atoi(idStr)
@@ -19,12 +19,12 @@ func (h *Handler) DeleteEmployee(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = h.DB.Queries.DeleteEmployee(ctx, int32(idInt))
+	err = h.DB.Queries.DeleteVehicle(ctx, int32(idInt))
 	if err != nil {
-		http.Error(w, "従業員の削除に失敗しました", http.StatusInternalServerError)
+		http.Error(w, "車両の削除に失敗しました", http.StatusInternalServerError)
 		return
 	}
 
 	sse := datastar.NewSSE(w, r)
-	sse.RemoveElementByID(fmt.Sprintf("employee-%d", idInt))
+	sse.RemoveElementByID(fmt.Sprintf("vehicle-%d", idInt))
 }

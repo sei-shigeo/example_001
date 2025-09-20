@@ -30,21 +30,21 @@ func (h *Handler) CreateEmployeeForm(w http.ResponseWriter, r *http.Request) {
 // 作成
 func (h *Handler) CreateEmployee(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
-	var empSignals models.EmployeeCreateSignals
-	if err := datastar.ReadSignals(r, &empSignals); err != nil {
+	var sig models.EmployeeCreateSignals
+	if err := datastar.ReadSignals(r, &sig); err != nil {
 		http.Error(w, "従業員の作成に失敗しました", http.StatusInternalServerError)
 		return
 	}
 
 	// バリデーションエラーがある時は送信できないようにする
-	if !empSignals.Create.IsValid() {
+	if !sig.Create.IsValid() {
 		http.Error(w, "バリデーションエラーがあります", http.StatusBadRequest)
 		return
 	}
 
 	emp, err := h.DB.Queries.CreateEmployee(ctx, &db.CreateEmployeeParams{
-		Name:  empSignals.Create.Name,
-		Email: empSignals.Create.Email,
+		Name:  sig.Create.Name,
+		Email: sig.Create.Email,
 	})
 	if err != nil {
 		http.Error(w, "従業員の作成に失敗しました", http.StatusInternalServerError)
@@ -59,7 +59,6 @@ func (h *Handler) CreateEmployee(w http.ResponseWriter, r *http.Request) {
 		datastar.WithModeAppend(),
 	)
 
-	var sig models.EmployeeCreateSignals
 	sig.Create = models.Employee{}
 	sig.Create.NewErrs()
 	sse.MarshalAndPatchSignals(sig)

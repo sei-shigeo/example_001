@@ -1,0 +1,26 @@
+package template
+
+import (
+	"fmt"
+	"project/internal/db"
+	"project/internal/web/app/components"
+)
+
+// UpdateEmployee は従業員を更新するフォームを表示します
+templ EditVehicleForm(vehicle *db.Vehicle) {
+	@components.EditForm(components.EditFormProps{
+		CloseAction: "$editVehicleForm = false",
+		SaveAction:  fmt.Sprintf("@patch('/vehicles/edit/%v')", vehicle.ID),
+	}) {
+		<div>
+			@components.EditFormField(components.FieldProps{
+				ID:           "Number",
+				Label:        "車両番号",
+				Bind:         "vehiclesEdit.number",
+				ErrorBind:    "$vehiclesEdit.errs.number",
+				ValidatePath: "@post('/vehicles/validate?mode=edit')",
+				Required:     true,
+			}.WithDefaults())
+		</div>
+	}
+}

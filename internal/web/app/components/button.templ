@@ -1,0 +1,35 @@
+package components
+
+type ButtonProps struct {
+	Type     string
+	Label    string
+	Action   string
+	Class    string
+	Disabled string
+	Attrs    templ.Attributes
+}
+
+func (p ButtonProps) WithDefaults() ButtonProps {
+	if p.Type == "" {
+		p.Type = "button"
+	}
+	if p.Class == "" {
+		p.Class = "bg-primary text-white rounded-md py-1.5 px-4"
+	}
+	if p.Label == "" {
+		p.Label = "button"
+	}
+	return p
+}
+
+templ Button(p ButtonProps) {
+	<button
+		type={ p.Type }
+		class={ p.Class }
+		data-attr-disabled={ p.Disabled }
+		data-on-click={ p.Action }
+		{ p.Attrs... }
+	>
+		{ p.Label }
+	</button>
+}

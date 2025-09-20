@@ -1,0 +1,63 @@
+package template
+
+import (
+	"fmt"
+	"project/internal/db"
+)
+
+type Props struct {
+	Vehicles []*db.Vehicle
+}
+
+templ (p Props) VehiclesPage() {
+	<main class="flex">
+		// Vehicles main container
+		<div class="flex-1 bg-blue-300 p-4">
+			<h1>Vehicles</h1>
+			// Create vehicle button
+			<button
+				id="createVehicleButton"
+				class="bg-primary text-white rounded-md py-1.5 px-4 inline-flex items-center gap-2"
+				type="button"
+				data-on-click="$createVehicleForm = !$createVehicleForm"
+				data-on-click__once="@get('/vehicles/create')"
+			>
+				<span data-text="$createVehicleForm ? '閉じる' : '追加'"></span>
+			</button>
+			// Create vehicle form
+			<div id="createVehicleForm" data-show="$createVehicleForm" style="display: none;"></div>
+			// Vehicles cards list
+			<div>
+				<p>{ len(p.Vehicles) }台</p>
+				<div id="vehiclesList" class="grid gap-2 grid-cols-[repeat(auto-fill,minmax(300px,1fr))]">
+					for _, vehicle := range p.Vehicles {
+						@VehicleOne(vehicle)
+					}
+				</div>
+			</div>
+		</div>
+		// Edit vehicle form
+		<div id="editVehicleForm" class="w-auto bg-gray-300 p-4" data-show="$editVehicleForm" style="display: none;"></div>
+	</main>
+}
+
+// VehicleOne は車両を表示します
+templ VehicleOne(vehicle *db.Vehicle) {
+	<div id={ fmt.Sprintf("vehicle-%d", vehicle.ID) } class="border rounded-md p-2 flex items-center gap-4">
+		<div
+			class="flex items-center gap-4 flex-1"
+			data-on-click={ fmt.Sprintf("$currentEditId === %[1]d ? ($editVehicleForm = true) : (@get('/vehicles/edit/%[1]d'), $currentEditId = %[1]d)", vehicle.ID) }
+		>
+			<div class="flex-1 overflow-hidden">
+				<span>車両番号:</span>
+				<p class="flex-1 truncate">{ vehicle.Number }</p>
+			</div>
+		</div>
+		<button
+			class="p-2 hover:bg-gray-200 rounded-md"
+			data-on-click={ fmt.Sprintf("@delete('/vehicles/delete/%d')", vehicle.ID) }
+		>
+			<span class="icon-[heroicons--trash] w-4 h-4"></span>
+		</button>
+	</div>
+}

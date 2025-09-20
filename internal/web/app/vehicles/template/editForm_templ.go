@@ -15,7 +15,7 @@ import (
 )
 
 // UpdateEmployee は従業員を更新するフォームを表示します
-func EditEmployeeForm(emp *db.Employee) templ.Component {
+func EditVehicleForm(vehicle *db.Vehicle) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -48,37 +48,30 @@ func EditEmployeeForm(emp *db.Employee) templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
 			templ_7745c5c3_Err = components.EditFormField(components.FieldProps{
-				ID:           "Name",
-				Label:        "名前",
-				Bind:         "employeeEdit.name",
-				ErrorBind:    "$employeeEdit.errs.name",
-				ValidatePath: "@post('/employees/validate?mode=edit')",
+				ID:           "Number",
+				Label:        "車両番号",
+				Bind:         "vehiclesEdit.number",
+				ErrorBind:    "$vehiclesEdit.errs.number",
+				ValidatePath: "@post('/vehicles/validate?mode=edit')",
 				Required:     true,
 			}.WithDefaults()).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, " ")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			templ_7745c5c3_Err = components.EditFormField(components.FieldProps{
-				ID:           "Email",
-				Label:        "メールアドレス",
-				Bind:         "employeeEdit.email",
-				ErrorBind:    "$employeeEdit.errs.email",
-				ValidatePath: "@post('/employees/validate?mode=edit')",
-				Required:     true,
-			}.WithDefaults()).Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			return nil
 		})
 		templ_7745c5c3_Err = components.EditForm(components.EditFormProps{
-			CloseAction: "$editEmployeeForm = false",
-			SaveAction:  fmt.Sprintf("@patch('/employees/edit/%d')", emp.ID),
+			CloseAction: "$editVehicleForm = false",
+			SaveAction:  fmt.Sprintf("@patch('/vehicles/edit/%v')", vehicle.ID),
 		}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err

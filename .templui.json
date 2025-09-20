@@ -1,7 +1,0 @@
-{
-  "componentsDir": "internal/components/templui",
-  "utilsDir": "internal/utils/templui",
-  "moduleName": "project",
-  "jsDir": "assets/js/templui",
-  "jsPublicPath": "/assets/js"
-}

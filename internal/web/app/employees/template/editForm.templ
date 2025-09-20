@@ -3,64 +3,30 @@ package template
 import (
 	"fmt"
 	"project/internal/db"
+	"project/internal/web/app/components"
 )
 
 // UpdateEmployee は従業員を更新するフォームを表示します
 templ EditEmployeeForm(emp *db.Employee) {
-	<div class="grid gap-4">
-		// Close button
-		<button
-			type="button"
-			class="bg-primary text-white rounded-md py-1.5 px-4"
-			data-on-click="$editEmployeeForm = false"
-		>
-			閉じる
-		</button>
-		// Employee edit
-		<div>
-			<label class="grid gap-1">
-				<span>
-					<span class="text-red-500 align-middle">*</span>
-					<span>名前</span>
-					<span id="editErrorName" class="text-red-500 text-xs" data-text="$employeeEdit.errs.name"></span>
-				</span>
-				<input
-					id="editName"
-					placeholder="名前"
-					required
-					aria-live="polite"
-					aria-describedby="editErrorName"
-					class=" bg-gray-100 rounded-md p-1 border focus:outline-none focus:ring-1 focus:ring-primary"
-					type="text"
-					data-bind="employeeEdit.name"
-					data-on-keydown__debounce.500ms="@post('/employees/validate?mode=edit')"
-				/>
-			</label>
-			<label class="grid gap-1">
-				<span>
-					<span class="text-red-500 align-middle">*</span>
-					<span>メールアドレス</span>
-					<span id="editErrorEmail" class="text-red-500 text-xs" data-text="$employeeEdit.errs.email"></span>
-				</span>
-				<input
-					id="editEmail"
-					placeholder="メールアドレス"
-					required
-					aria-live="polite"
-					aria-describedby="editErrorEmail"
-					class=" bg-gray-100 rounded-md p-1 border focus:outline-none focus:ring-1 focus:ring-primary"
-					type="email"
-					data-bind="employeeEdit.email"
-					data-on-keydown__debounce.500ms="@post('/employees/validate?mode=edit')"
-				/>
-			</label>
-		</div>
-		<button
-			class=" py-1.5 px-4 bg-primary text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
-			type="button"
-			data-on-click={ fmt.Sprintf("@patch('/employees/edit/%d')", emp.ID) }
-		>
-			保存
-		</button>
-	</div>
+	@components.EditForm(components.EditFormProps{
+		CloseAction: "$editEmployeeForm = false",
+		SaveAction:  fmt.Sprintf("@patch('/employees/edit/%d')", emp.ID),
+	}) {
+		@components.EditFormField(components.FieldProps{
+			ID:           "Name",
+			Label:        "名前",
+			Bind:         "employeeEdit.name",
+			ErrorBind:    "$employeeEdit.errs.name",
+			ValidatePath: "@post('/employees/validate?mode=edit')",
+			Required:     true,
+		}.WithDefaults())
+		@components.EditFormField(components.FieldProps{
+			ID:           "Email",
+			Label:        "メールアドレス",
+			Bind:         "employeeEdit.email",
+			ErrorBind:    "$employeeEdit.errs.email",
+			ValidatePath: "@post('/employees/validate?mode=edit')",
+			Required:     true,
+		}.WithDefaults())
+	}
 }

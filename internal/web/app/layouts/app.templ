@@ -1,9 +1,5 @@
 package layouts
 
-import "project/internal/components/templui/icon"
-import "project/internal/components/templui/input"
-import "project/internal/components/templui/avatar"
-
 templ Base(title string, content templ.Component) {
 	<!DOCTYPE html>
 	<html lang="ja">
@@ -13,8 +9,6 @@ templ Base(title string, content templ.Component) {
 			<link href="/assets/css/output.css" rel="stylesheet"/>
 			<script defer type="module" src="/assets/js/datastar-proRC5.js"></script>
 			<script defer type="module" src="/assets/js/datastar-inspector.js"></script>
-			@input.Script()
-			@avatar.Script()
 			<title>{ title }</title>
 		</head>
 		<body>
@@ -39,37 +33,37 @@ templ SideBar() {
 		<ul>
 			<li>
 				<div class="flex items-center gap-2 h-10">
-					@icon.Book(icon.Props{Size: 24})
+					<span class="icon-[material-symbols--book-2-outline] size-6"></span>
 					<a href="/employees">従業員情報</a>
 				</div>
 			</li>
 			<li>
 				<div class="flex items-center gap-2 h-10">
-					@icon.Book(icon.Props{Size: 24})
+					<span class="icon-[material-symbols--book-2-outline] size-6"></span>
 					<a href="/customer">取引先情報</a>
 				</div>
 			</li>
 			<li>
 				<div class="flex items-center gap-2 h-10">
-					@icon.Book(icon.Props{Size: 24})
-					<a href="/vehicle">車両情報</a>
+					<span class="icon-[material-symbols--book-2-outline] size-6"></span>
+					<a href="/vehicles">車両情報</a>
 				</div>
 			</li>
 			<li>
 				<div class="flex items-center gap-2 h-10">
-					@icon.Book(icon.Props{Size: 24})
+					<span class="icon-[material-symbols--book-2-outline] size-6"></span>
 					<a href="/order">受注情報</a>
 				</div>
 			</li>
 			<li>
 				<div class="flex items-center gap-2 h-10">
-					@icon.Book(icon.Props{Size: 24})
+					<span class="icon-[material-symbols--book-2-outline] size-6"></span>
 					<a href="/dispatch">配車情報</a>
 				</div>
 			</li>
 			<li>
 				<div class="flex items-center gap-2 h-10">
-					@icon.Book(icon.Props{Size: 24})
+					<span class="icon-[material-symbols--book-2-outline] size-6"></span>
 					<a href="/attendance">点呼記録簿登録</a>
 				</div>
 			</li>

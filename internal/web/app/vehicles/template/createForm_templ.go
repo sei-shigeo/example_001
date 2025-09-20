@@ -10,7 +10,7 @@ import templruntime "github.com/a-h/templ/runtime"
 
 import "project/internal/web/app/components"
 
-func CreateEmployee() templ.Component {
+func CreateVehicleForm() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -36,45 +36,30 @@ func CreateEmployee() templ.Component {
 			return templ_7745c5c3_Err
 		}
 		templ_7745c5c3_Err = components.EditFormField(components.FieldProps{
-			ID:           "Name",
-			Label:        "名前",
-			Bind:         "employeeCreate.name",
-			ErrorBind:    "$employeeCreate.errs.name",
-			ValidatePath: "@post('/employees/validate?mode=create')",
+			ID:           "Number",
+			Label:        "車両番号",
+			Bind:         "vehiclesCreate.number",
+			ErrorBind:    "$vehiclesCreate.errs.number",
+			ValidatePath: "@post('/vehicles/validate?mode=create')",
 			Required:     true,
 		}.WithDefaults()).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</div><div class=\"w-full max-w-sm\">")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = components.EditFormField(components.FieldProps{
-			ID:           "Email",
-			Label:        "メールアドレス",
-			Bind:         "employeeCreate.email",
-			ErrorBind:    "$employeeCreate.errs.email",
-			ValidatePath: "@post('/employees/validate?mode=create')",
-			Required:     true,
-		}.WithDefaults()).Render(ctx, templ_7745c5c3_Buffer)
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</div><div class=\"grid gap-2 grid-cols-[12rem_12rem]\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</div><div class=\"grid gap-2 grid-cols-[12rem_12rem]\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		templ_7745c5c3_Err = components.Button(components.ButtonProps{
-			Action:   "@post('/employees/create')",
+			Action:   "@post('/vehicles/create')",
 			Label:    "保存",
 			Class:    "bg-primary text-white rounded-md py-1.5 px-4 disabled:opacity-50 disabled:cursor-not-allowed",
-			Disabled: "!$employeeCreate.disabled",
+			Disabled: "!$vehiclesCreate.disabled",
 		}.WithDefaults()).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
