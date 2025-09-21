@@ -12,15 +12,18 @@ templ EditVehicleForm(vehicle *db.Vehicle) {
 		CloseAction: "$editVehicleForm = false",
 		SaveAction:  fmt.Sprintf("@patch('/vehicles/edit/%v')", vehicle.ID),
 	}) {
-		<div>
-			@components.EditFormField(components.FieldProps{
-				ID:           "Number",
-				Label:        "車両番号",
+		@components.InputLabel(components.InputLabelProps{
+			Label: components.LabelProps{
+				Label:     "車両番号",
+				ErrorBind: "$vehiclesEdit.errs.number",
+			},
+			Input: components.InputProps{
+				ID:           "editNumber",
+				Placeholder:  "例: 1234",
 				Bind:         "vehiclesEdit.number",
-				ErrorBind:    "$vehiclesEdit.errs.number",
 				ValidatePath: "@post('/vehicles/validate?mode=edit')",
 				Required:     true,
-			}.WithDefaults())
-		</div>
+			},
+		})
 	}
 }

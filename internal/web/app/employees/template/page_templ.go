@@ -113,7 +113,7 @@ func EmployeeOne(emp *db.Employee) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "\" class=\"border rounded-md p-2 flex items-center gap-4\"><div class=\"flex items-center gap-4 flex-1\" data-on-click=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "\" class=\"border rounded-md p-2 flex items-center gap-4\"><div class=\"flex items-center gap-4 flex-1 overflow-x-hidden\" data-on-click=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -139,7 +139,7 @@ func EmployeeOne(emp *db.Employee) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</span></div><div class=\"flex-1 overflow-hidden\"><div class=\"flex gap-1\"><span>name:</span><p class=\"flex-1 truncate\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</span></div><div class=\"flex-1 overflow-x-hidden\"><div class=\"flex gap-1\"><span>name:</span><p class=\"flex-1 truncate\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

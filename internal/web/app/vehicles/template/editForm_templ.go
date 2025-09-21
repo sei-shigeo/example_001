@@ -48,22 +48,19 @@ func EditVehicleForm(vehicle *db.Vehicle) templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div>")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			templ_7745c5c3_Err = components.EditFormField(components.FieldProps{
-				ID:           "Number",
-				Label:        "車両番号",
-				Bind:         "vehiclesEdit.number",
-				ErrorBind:    "$vehiclesEdit.errs.number",
-				ValidatePath: "@post('/vehicles/validate?mode=edit')",
-				Required:     true,
-			}.WithDefaults()).Render(ctx, templ_7745c5c3_Buffer)
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</div>")
+			templ_7745c5c3_Err = components.InputLabel(components.InputLabelProps{
+				Label: components.LabelProps{
+					Label:     "車両番号",
+					ErrorBind: "$vehiclesEdit.errs.number",
+				},
+				Input: components.InputProps{
+					ID:           "editNumber",
+					Placeholder:  "例: 1234",
+					Bind:         "vehiclesEdit.number",
+					ValidatePath: "@post('/vehicles/validate?mode=edit')",
+					Required:     true,
+				},
+			}).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

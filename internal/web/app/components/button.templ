@@ -26,8 +26,12 @@ templ Button(p ButtonProps) {
 	<button
 		type={ p.Type }
 		class={ p.Class }
-		data-attr-disabled={ p.Disabled }
-		data-on-click={ p.Action }
+		if p.Disabled != "" {
+			data-attr-disabled={ p.Disabled }
+		}
+		if p.Action != "" {
+			data-on-click={ p.Action }
+		}
 		{ p.Attrs... }
 	>
 		{ p.Label }

@@ -48,14 +48,19 @@ func EditEmployeeForm(emp *db.Employee) templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = components.EditFormField(components.FieldProps{
-				ID:           "Name",
-				Label:        "名前",
-				Bind:         "employeeEdit.name",
-				ErrorBind:    "$employeeEdit.errs.name",
-				ValidatePath: "@post('/employees/validate?mode=edit')",
-				Required:     true,
-			}.WithDefaults()).Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = components.InputLabel(components.InputLabelProps{
+				Label: components.LabelProps{
+					Label:     "名前",
+					ErrorBind: "$employeeEdit.errs.name",
+				},
+				Input: components.InputProps{
+					ID:           "editName",
+					Placeholder:  "例: 山田 太郎",
+					Bind:         "employeeEdit.name",
+					ValidatePath: "@post('/employees/validate?mode=edit')",
+					Required:     true,
+				},
+			}).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -63,14 +68,19 @@ func EditEmployeeForm(emp *db.Employee) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = components.EditFormField(components.FieldProps{
-				ID:           "Email",
-				Label:        "メールアドレス",
-				Bind:         "employeeEdit.email",
-				ErrorBind:    "$employeeEdit.errs.email",
-				ValidatePath: "@post('/employees/validate?mode=edit')",
-				Required:     true,
-			}.WithDefaults()).Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = components.InputLabel(components.InputLabelProps{
+				Label: components.LabelProps{
+					Label:     "メールアドレス",
+					ErrorBind: "$employeeEdit.errs.email",
+				},
+				Input: components.InputProps{
+					ID:           "editEmail",
+					Placeholder:  "例: yamada@example.com",
+					Bind:         "employeeEdit.email",
+					ValidatePath: "@post('/employees/validate?mode=edit')",
+					Required:     true,
+				},
+			}).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

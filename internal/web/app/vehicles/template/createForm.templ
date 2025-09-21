@@ -3,21 +3,24 @@ package template
 import "project/internal/web/app/components"
 
 templ CreateVehicleForm() {
-	<div class="w-full max-w-sm">
-		@components.EditFormField(components.FieldProps{
-			ID:           "Number",
-			Label:        "車両番号",
+	@components.InputLabel(components.InputLabelProps{
+		Label: components.LabelProps{
+			Label:     "車両番号",
+			ErrorBind: "$vehiclesCreate.errs.number",
+		},
+		Input: components.InputProps{
+			ID:           "createNumber",
+			Placeholder:  "例: 1234",
 			Bind:         "vehiclesCreate.number",
-			ErrorBind:    "$vehiclesCreate.errs.number",
 			ValidatePath: "@post('/vehicles/validate?mode=create')",
 			Required:     true,
-		}.WithDefaults())
-	</div>
-	<div class="grid gap-2 grid-cols-[12rem_12rem]">
+		},
+	})
+	<div class="w-full max-w-sm">
 		@components.Button(components.ButtonProps{
-			Action: "@post('/vehicles/create')",
-			Label:  "保存",
-			Class:  "bg-primary text-white rounded-md py-1.5 px-4 disabled:opacity-50 disabled:cursor-not-allowed",
+			Action:   "@post('/vehicles/create')",
+			Label:    "保存",
+			Class:    "bg-primary text-white rounded-md py-1.5 px-4 disabled:opacity-50 disabled:cursor-not-allowed",
 			Disabled: "!$vehiclesCreate.disabled",
 		}.WithDefaults())
 	</div>

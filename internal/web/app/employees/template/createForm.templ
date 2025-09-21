@@ -3,27 +3,33 @@ package template
 import "project/internal/web/app/components"
 
 templ CreateEmployee() {
-	<div class="w-full max-w-sm">
-		@components.EditFormField(components.FieldProps{
-			ID:           "Name",
-			Label:        "名前",
+	@components.InputLabel(components.InputLabelProps{
+		Label: components.LabelProps{
+			Label:     "名前",
+			ErrorBind: "$employeeCreate.errs.name",
+		},
+		Input: components.InputProps{
+			ID:           "createName",
+			Placeholder:  "例: 山田 太郎",
 			Bind:         "employeeCreate.name",
-			ErrorBind:    "$employeeCreate.errs.name",
 			ValidatePath: "@post('/employees/validate?mode=create')",
 			Required:     true,
-		}.WithDefaults())
-	</div>
-	<div class="w-full max-w-sm">
-		@components.EditFormField(components.FieldProps{
-			ID:           "Email",
-			Label:        "メールアドレス",
+		},
+	})
+	@components.InputLabel(components.InputLabelProps{
+		Label: components.LabelProps{
+			Label:     "メールアドレス",
+			ErrorBind: "$employeeCreate.errs.email",
+		},
+		Input: components.InputProps{
+			ID:           "createEmail",
+			Placeholder:  "例: example@example.com",
 			Bind:         "employeeCreate.email",
-			ErrorBind:    "$employeeCreate.errs.email",
 			ValidatePath: "@post('/employees/validate?mode=create')",
 			Required:     true,
-		}.WithDefaults())
-	</div>
-	<div class="grid gap-2 grid-cols-[12rem_12rem]">
+		},
+	})
+	<div class="w-full max-w-sm">
 		@components.Button(components.ButtonProps{
 			Action: "@post('/employees/create')",
 			Label:  "保存",

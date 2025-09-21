@@ -31,22 +31,23 @@ func CreateVehicleForm() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
+		templ_7745c5c3_Err = components.InputLabel(components.InputLabelProps{
+			Label: components.LabelProps{
+				Label:     "車両番号",
+				ErrorBind: "$vehiclesCreate.errs.number",
+			},
+			Input: components.InputProps{
+				ID:           "createNumber",
+				Placeholder:  "例: 1234",
+				Bind:         "vehiclesCreate.number",
+				ValidatePath: "@post('/vehicles/validate?mode=create')",
+				Required:     true,
+			},
+		}).Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
 		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"w-full max-w-sm\">")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = components.EditFormField(components.FieldProps{
-			ID:           "Number",
-			Label:        "車両番号",
-			Bind:         "vehiclesCreate.number",
-			ErrorBind:    "$vehiclesCreate.errs.number",
-			ValidatePath: "@post('/vehicles/validate?mode=create')",
-			Required:     true,
-		}.WithDefaults()).Render(ctx, templ_7745c5c3_Buffer)
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</div><div class=\"grid gap-2 grid-cols-[12rem_12rem]\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -59,7 +60,7 @@ func CreateVehicleForm() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

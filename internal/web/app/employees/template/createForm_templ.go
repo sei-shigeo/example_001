@@ -31,37 +31,39 @@ func CreateEmployee() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
+		templ_7745c5c3_Err = components.InputLabel(components.InputLabelProps{
+			Label: components.LabelProps{
+				Label:     "名前",
+				ErrorBind: "$employeeCreate.errs.name",
+			},
+			Input: components.InputProps{
+				ID:           "createName",
+				Placeholder:  "例: 山田 太郎",
+				Bind:         "employeeCreate.name",
+				ValidatePath: "@post('/employees/validate?mode=create')",
+				Required:     true,
+			},
+		}).Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = components.InputLabel(components.InputLabelProps{
+			Label: components.LabelProps{
+				Label:     "メールアドレス",
+				ErrorBind: "$employeeCreate.errs.email",
+			},
+			Input: components.InputProps{
+				ID:           "createEmail",
+				Placeholder:  "例: example@example.com",
+				Bind:         "employeeCreate.email",
+				ValidatePath: "@post('/employees/validate?mode=create')",
+				Required:     true,
+			},
+		}).Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
 		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"w-full max-w-sm\">")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = components.EditFormField(components.FieldProps{
-			ID:           "Name",
-			Label:        "名前",
-			Bind:         "employeeCreate.name",
-			ErrorBind:    "$employeeCreate.errs.name",
-			ValidatePath: "@post('/employees/validate?mode=create')",
-			Required:     true,
-		}.WithDefaults()).Render(ctx, templ_7745c5c3_Buffer)
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</div><div class=\"w-full max-w-sm\">")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = components.EditFormField(components.FieldProps{
-			ID:           "Email",
-			Label:        "メールアドレス",
-			Bind:         "employeeCreate.email",
-			ErrorBind:    "$employeeCreate.errs.email",
-			ValidatePath: "@post('/employees/validate?mode=create')",
-			Required:     true,
-		}.WithDefaults()).Render(ctx, templ_7745c5c3_Buffer)
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</div><div class=\"grid gap-2 grid-cols-[12rem_12rem]\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -74,7 +76,7 @@ func CreateEmployee() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

@@ -3,7 +3,7 @@ package components
 type EditFormProps struct {
 	CloseAction string // 閉じるボタンのアクション
 	SaveAction  string // 保存ボタンのアクション
-	// Fields      FieldProps // 単数形になってる
+	Disabled    string // 保存ボタンのdisabled条件
 }
 
 type FieldProps struct {
@@ -29,9 +29,6 @@ func (f FieldProps) WithDefaults() FieldProps {
 	if f.Placeholder == "" {
 		f.Placeholder = f.Label
 	}
-	if f.ID == "" {
-		f.ID = "edit" + f.ID
-	}
 	// Requiredのデフォルトは設定しない（明示的に設定してもらう）
 	return f
 }
@@ -51,6 +48,7 @@ templ EditForm(p EditFormProps) {
 			@Button(ButtonProps{
 				Action: p.SaveAction,
 				Label:  "保存",
+				Disabled: p.Disabled,
 			}.WithDefaults())
 		</div>
 	</div>
@@ -58,27 +56,67 @@ templ EditForm(p EditFormProps) {
 
 templ EditFormField(f FieldProps) {
 	{{ id := "edit" + f.ID }}
-	<label for={ id } class="grid gap-1">
-		if f.Required {
-			<span class="text-red-500 align-middle">*</span>
-		}
-		<span>{ f.Label }</span>
-		<span id={ f.AriaDescribedby } class="text-red-500 text-xs" data-text={ f.ErrorBind }></span>
-	</label>
-	<input
-		id={ id }
-		placeholder={ f.Placeholder }
-		if f.Required {
-			required
-		}
-		aria-live="polite"
-		aria-describedby={ f.AriaDescribedby }
-		class="bg-gray-100 rounded-md p-1 border focus:outline-none focus:ring-1 focus:ring-primary"
-		type={ f.Type }
-		data-bind={ f.Bind }
-		if f.ValidatePath != "" {
-			data-on-keydown__debounce.500ms={ f.ValidatePath }
-		}
-	/>
+	@Label(LabelProps{
+		For:             id,
+		Label:           f.Label,
+		Required:        f.Required,
+		AriaDescribedby: f.AriaDescribedby,
+		ErrorBind:       f.ErrorBind,
+	})
+	// <input
+	// 	id={ id }
+	// 	placeholder={ f.Placeholder }
+	// 	if f.Required {
+	// 		required
+	// 	}
+	// 	aria-live="polite"
+	// 	aria-describedby={ f.AriaDescribedby }
+	// 	class="bg-gray-100 rounded-md p-1 border focus:outline-none focus:ring-1 focus:ring-primary"
+	// 	type={ f.Type }
+	// 	data-bind={ f.Bind }
+	// 	if f.ValidatePath != "" {
+	// 		data-on-keydown__debounce.500ms={ f.ValidatePath }
+	// 	}
+	// />
+	@Input(InputProps{
+		ID:              id,
+		Placeholder:     f.Placeholder,
+		Type:            f.Type,
+		Bind:            f.Bind,
+		ValidatePath:    f.ValidatePath,
+		AriaDescribedby: f.AriaDescribedby,
+		Required:        f.Required,
+	}.WithDefaults())
 }
 
+templ CleateForm() {
+	@EditForm(EditFormProps{
+		CloseAction: "closeForm",
+		SaveAction:  "saveForm",
+		Disabled:    "isSaving || !isValid",
+	}) {
+		@EditFormField(FieldProps{
+			ID:        "Name",
+			Label:     "名前",
+			Bind:      "formData.name",
+			ErrorBind: "errors.name",
+			Required:  true,
+		}.WithDefaults())
+		@EditFormField(FieldProps{
+			ID:        "Email",
+			Label:     "メールアドレス",
+			Type:      "email",
+			Bind:      "formData.email",
+			ErrorBind: "errors.email",
+			Required:  true,
+		}.WithDefaults())
+		@EditFormField(FieldProps{
+			ID:        "Age",
+			Label:     "年齢",
+			Type:      "number",
+			Bind:      "formData.age",
+			ErrorBind: "errors.age",
+			Required:  false,
+		}.WithDefaults())
+	}
+}

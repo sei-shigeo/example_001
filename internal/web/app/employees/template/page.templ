@@ -54,7 +54,7 @@ func getFirstLetter(name string) string {
 templ EmployeeOne(emp *db.Employee) {
 	<div id={ fmt.Sprintf("employee-%d", emp.ID) } class="border rounded-md p-2 flex items-center gap-4">
 		<div
-			class="flex items-center gap-4 flex-1"
+			class="flex items-center gap-4 flex-1 overflow-x-hidden"
 			data-on-click={ fmt.Sprintf("$currentEditId === %[1]d ? ($editEmployeeForm = true) : (@get('/employees/edit/%[1]d'), $currentEditId = %[1]d)", emp.ID) }
 		>
 			// Avatar
@@ -62,7 +62,7 @@ templ EmployeeOne(emp *db.Employee) {
 				<span class="text-sm font-medium">{ getFirstLetter(emp.Name) }</span>
 			</div>
 			// Employee details
-			<div class="flex-1 overflow-hidden">
+			<div class="flex-1 overflow-x-hidden">
 				// Name field
 				<div class="flex gap-1">
 					<span>name:</span>
