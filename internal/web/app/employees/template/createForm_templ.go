@@ -31,52 +31,67 @@ func CreateEmployee() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = components.InputLabel(components.InputLabelProps{
-			Label: components.LabelProps{
-				Label:     "名前",
-				ErrorBind: "$employeeCreate.errs.name",
-			},
-			Input: components.InputProps{
-				ID:           "createName",
-				Placeholder:  "例: 山田 太郎",
-				Bind:         "employeeCreate.name",
-				ValidatePath: "@post('/employees/validate?mode=create')",
-				Required:     true,
-			},
-		}).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"grid gap-4\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = components.InputLabel(components.InputLabelProps{
-			Label: components.LabelProps{
-				Label:     "メールアドレス",
-				ErrorBind: "$employeeCreate.errs.email",
-			},
-			Input: components.InputProps{
-				ID:           "createEmail",
-				Placeholder:  "例: example@example.com",
-				Bind:         "employeeCreate.email",
-				ValidatePath: "@post('/employees/validate?mode=create')",
-				Required:     true,
-			},
-		}).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Var2 := templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+			templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
+			templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
+			if !templ_7745c5c3_IsBuffer {
+				defer func() {
+					templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
+					if templ_7745c5c3_Err == nil {
+						templ_7745c5c3_Err = templ_7745c5c3_BufErr
+					}
+				}()
+			}
+			ctx = templ.InitializeContext(ctx)
+			templ_7745c5c3_Err = components.InputLabel(components.InputLabelProps{
+				Label: components.LabelProps{
+					Label:     "名前",
+					ErrorBind: "$employeeCreate.errs.name",
+				},
+				Input: components.InputProps{
+					ID:           "createName",
+					Placeholder:  "例: 山田 太郎",
+					Bind:         "employeeCreate.name",
+					ValidatePath: "@post('/employees/validate?mode=create')",
+					Required:     true,
+				},
+			}).Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, " ")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = components.InputLabel(components.InputLabelProps{
+				Label: components.LabelProps{
+					Label:     "メールアドレス",
+					ErrorBind: "$employeeCreate.errs.email",
+				},
+				Input: components.InputProps{
+					ID:           "createEmail",
+					Placeholder:  "例: example@example.com",
+					Bind:         "employeeCreate.email",
+					ValidatePath: "@post('/employees/validate?mode=create')",
+					Required:     true,
+				},
+			}).Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			return nil
+		})
+		templ_7745c5c3_Err = components.CreateForm(components.FormProps{
+			SaveAction: "@post('/employees/create')",
+		}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"w-full max-w-sm\">")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = components.Button(components.ButtonProps{
-			Action:   "@post('/employees/create')",
-			Label:    "保存",
-			Class:    "bg-primary text-white rounded-md py-1.5 px-4 disabled:opacity-50 disabled:cursor-not-allowed",
-			Disabled: "!$employeeCreate.disabled",
-		}.WithDefaults()).Render(ctx, templ_7745c5c3_Buffer)
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

@@ -15,6 +15,7 @@ import (
 
 type Props struct {
 	Vehicles []*db.Vehicle
+	Title    string
 }
 
 func (p Props) VehiclesPage() templ.Component {
@@ -38,20 +39,33 @@ func (p Props) VehiclesPage() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<main class=\"flex\"><div class=\"flex-1 bg-blue-300 p-4\"><h1>Vehicles</h1><button id=\"createVehicleButton\" class=\"bg-primary text-white rounded-md py-1.5 px-4 inline-flex items-center gap-2\" type=\"button\" data-on-click=\"$createVehicleForm = !$createVehicleForm\" data-on-click__once=\"@get('/vehicles/create')\"><span data-text=\"$createVehicleForm ? '閉じる' : '追加'\"></span></button><div id=\"createVehicleForm\" data-show=\"$createVehicleForm\" style=\"display: none;\"></div><div><p>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<main class=\"flex\"><div class=\"flex-1 bg-blue-300 p-4\"><h1>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var2 string
-		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(len(p.Vehicles))
+		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(p.Title)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/app/vehicles/template/page.templ`, Line: 31, Col: 24}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/app/vehicles/template/page.templ`, Line: 17, Col: 16}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "台</p><div id=\"vehiclesList\" class=\"grid gap-2 grid-cols-[repeat(auto-fill,minmax(300px,1fr))]\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</h1><button id=\"createVehicleButton\" class=\"bg-primary text-white rounded-md py-1.5 px-4 inline-flex items-center gap-2\" type=\"button\" data-on-click=\"$createVehicleForm = !$createVehicleForm\" data-on-click__once=\"@get('/vehicles/create')\"><span data-text=\"$createVehicleForm ? '閉じる' : '追加'\"></span></button><div id=\"createVehicleForm\" data-show=\"$createVehicleForm\" style=\"display: none;\"></div><div><p>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var3 string
+		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(len(p.Vehicles))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/app/vehicles/template/page.templ`, Line: 32, Col: 24}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "台</p><div id=\"vehiclesList\" class=\"grid gap-2 grid-cols-[repeat(auto-fill,minmax(300px,1fr))]\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -61,7 +75,7 @@ func (p Props) VehiclesPage() templ.Component {
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</div></div></div><div id=\"editVehicleForm\" class=\"w-auto bg-gray-300 p-4\" data-show=\"$editVehicleForm\" style=\"display: none;\"></div></main>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</div></div></div><div id=\"editVehicleForm\" class=\"w-auto bg-gray-300 p-4\" data-show=\"$editVehicleForm\" style=\"display: none;\"></div></main>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -86,64 +100,64 @@ func VehicleOne(vehicle *db.Vehicle) templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var3 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var3 == nil {
-			templ_7745c5c3_Var3 = templ.NopComponent
+		templ_7745c5c3_Var4 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var4 == nil {
+			templ_7745c5c3_Var4 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<div id=\"")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		var templ_7745c5c3_Var4 string
-		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("vehicle-%d", vehicle.ID))
-		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/app/vehicles/template/page.templ`, Line: 46, Col: 48}
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "\" class=\"border rounded-md p-2 flex items-center gap-4\"><div class=\"flex items-center gap-4 flex-1\" data-on-click=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "<div id=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var5 string
-		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("$currentEditId === %[1]d ? ($editVehicleForm = true) : (@get('/vehicles/edit/%[1]d'), $currentEditId = %[1]d)", vehicle.ID))
+		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("vehicle-%d", vehicle.ID))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/app/vehicles/template/page.templ`, Line: 49, Col: 155}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/app/vehicles/template/page.templ`, Line: 47, Col: 48}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "\"><div class=\"flex-1 overflow-hidden\"><span>車両番号:</span><p class=\"flex-1 truncate\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "\" class=\"border rounded-md p-2 flex items-center gap-4\"><div class=\"flex items-center gap-4 flex-1\" data-on-click=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var6 string
-		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(vehicle.Number)
+		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("$currentEditId === %[1]d ? ($editVehicleForm = true) : (@get('/vehicles/edit/%[1]d'), $currentEditId = %[1]d)", vehicle.ID))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/app/vehicles/template/page.templ`, Line: 53, Col: 47}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/app/vehicles/template/page.templ`, Line: 50, Col: 155}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</p></div></div><button class=\"p-2 hover:bg-gray-200 rounded-md\" data-on-click=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "\"><div class=\"flex-1 overflow-hidden\"><span>車両番号:</span><p class=\"flex-1 truncate\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var7 string
-		templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("@delete('/vehicles/delete/%d')", vehicle.ID))
+		templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(vehicle.Number)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/app/vehicles/template/page.templ`, Line: 58, Col: 76}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/app/vehicles/template/page.templ`, Line: 54, Col: 47}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "\"><span class=\"icon-[heroicons--trash] w-4 h-4\"></span></button></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</p></div></div><button class=\"p-2 hover:bg-gray-200 rounded-md\" data-on-click=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var8 string
+		templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("@delete('/vehicles/delete/%d')", vehicle.ID))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/app/vehicles/template/page.templ`, Line: 59, Col: 76}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "\"><span class=\"icon-[heroicons--trash] w-4 h-4\"></span></button></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

@@ -8,13 +8,14 @@ import (
 
 type Props struct {
 	Employees []*db.Employee
+	Title     string
 }
 
 templ (p Props) EmployeesPage() {
 	<main class="flex">
 		// Employees main container
 		<div class="flex-1 bg-blue-300 p-4">
-			<h1>Employees</h1>
+			<h1>{ p.Title }</h1>
 			// Create employee button
 			<button
 				id="createEmployeeButton"

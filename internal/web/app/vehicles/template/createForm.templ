@@ -3,25 +3,23 @@ package template
 import "project/internal/web/app/components"
 
 templ CreateVehicleForm() {
-	@components.InputLabel(components.InputLabelProps{
-		Label: components.LabelProps{
-			Label:     "車両番号",
-			ErrorBind: "$vehiclesCreate.errs.number",
-		},
-		Input: components.InputProps{
-			ID:           "createNumber",
-			Placeholder:  "例: 1234",
-			Bind:         "vehiclesCreate.number",
-			ValidatePath: "@post('/vehicles/validate?mode=create')",
-			Required:     true,
-		},
-	})
-	<div class="w-full max-w-sm">
-		@components.Button(components.ButtonProps{
-			Action:   "@post('/vehicles/create')",
-			Label:    "保存",
-			Class:    "bg-primary text-white rounded-md py-1.5 px-4 disabled:opacity-50 disabled:cursor-not-allowed",
-			Disabled: "!$vehiclesCreate.disabled",
-		}.WithDefaults())
+	<div class="grid gap-4">
+		@components.CreateForm(components.FormProps{
+			SaveAction: "@post('/vehicles/create')",
+		}) {
+			@components.InputLabel(components.InputLabelProps{
+				Label: components.LabelProps{
+					Label:     "車両番号",
+					ErrorBind: "$vehiclesCreate.errs.number",
+				},
+				Input: components.InputProps{
+					ID:           "createNumber",
+					Placeholder:  "例: 1234",
+					Bind:         "vehiclesCreate.number",
+					ValidatePath: "@post('/vehicles/validate?mode=create')",
+					Required:     true,
+				},
+			})
+		}
 	</div>
 }

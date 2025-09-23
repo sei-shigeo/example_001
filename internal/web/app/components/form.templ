@@ -1,0 +1,39 @@
+package components
+
+type FormProps struct {
+	CloseAction string // 閉じるボタンのアクション
+	SaveAction  string // 保存ボタンのアクション
+	Disabled    string // 保存ボタンのdisabled条件
+}
+
+templ EditForm(p FormProps) {
+	<div>
+		@Button(ButtonProps{
+			Action: p.CloseAction,
+			Label:  "閉じる",
+		})
+	</div>
+	<div>
+		{ children... }
+	</div>
+	<div>
+		@Button(ButtonProps{
+			Action:   p.SaveAction,
+			Label:    "保存",
+			Disabled: p.Disabled,
+		})
+	</div>
+}
+
+templ CreateForm(p FormProps) {
+	<div>
+		{ children... }
+	</div>
+	<div>
+		@Button(ButtonProps{
+			Action:   p.SaveAction,
+			Label:    "保存",
+			Disabled: p.Disabled,
+		})
+	</div>
+}

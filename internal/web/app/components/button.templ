@@ -23,6 +23,7 @@ func (p ButtonProps) WithDefaults() ButtonProps {
 }
 
 templ Button(p ButtonProps) {
+	{{ p := p.WithDefaults() }}
 	<button
 		type={ p.Type }
 		class={ p.Class }
@@ -37,3 +38,4 @@ templ Button(p ButtonProps) {
 		{ p.Label }
 	</button>
 }
+

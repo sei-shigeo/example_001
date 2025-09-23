@@ -26,18 +26,12 @@ func (h *Handler) Employees(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// タイトルを設定
-	title := "Employees"
-
 	// 従業員データを渡す
-	props := template.Props{
+	d := template.Props{
 		Employees: employees,
+		Title:     "従業員一覧",
 	}
 
 	// テンプレートに従業員データを渡してレンダリング
-	layouts.Base(title, props.EmployeesPage()).Render(ctx, w)
+	layouts.Base(d.Title, d.EmployeesPage()).Render(ctx, w)
 }
-
-
-
-

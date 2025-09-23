@@ -25,11 +25,10 @@ func (h *Handler) GetVehicles(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	title := "Vehicles"
-
-	props := template.Props{
+	d := template.Props{
 		Vehicles: vehicles,
+		Title:    "車両一覧",
 	}
 
-	layouts.Base(title, props.VehiclesPage()).Render(ctx, w)
+	layouts.Base(d.Title, d.VehiclesPage()).Render(ctx, w)
 }

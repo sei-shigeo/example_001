@@ -7,13 +7,14 @@ import (
 
 type Props struct {
 	Vehicles []*db.Vehicle
+	Title     string
 }
 
 templ (p Props) VehiclesPage() {
 	<main class="flex">
 		// Vehicles main container
 		<div class="flex-1 bg-blue-300 p-4">
-			<h1>Vehicles</h1>
+			<h1>{ p.Title }</h1>
 			// Create vehicle button
 			<button
 				id="createVehicleButton"

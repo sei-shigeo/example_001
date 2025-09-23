@@ -3,38 +3,36 @@ package template
 import "project/internal/web/app/components"
 
 templ CreateEmployee() {
-	@components.InputLabel(components.InputLabelProps{
-		Label: components.LabelProps{
-			Label:     "名前",
-			ErrorBind: "$employeeCreate.errs.name",
-		},
-		Input: components.InputProps{
-			ID:           "createName",
-			Placeholder:  "例: 山田 太郎",
-			Bind:         "employeeCreate.name",
-			ValidatePath: "@post('/employees/validate?mode=create')",
-			Required:     true,
-		},
-	})
-	@components.InputLabel(components.InputLabelProps{
-		Label: components.LabelProps{
-			Label:     "メールアドレス",
-			ErrorBind: "$employeeCreate.errs.email",
-		},
-		Input: components.InputProps{
-			ID:           "createEmail",
-			Placeholder:  "例: example@example.com",
-			Bind:         "employeeCreate.email",
-			ValidatePath: "@post('/employees/validate?mode=create')",
-			Required:     true,
-		},
-	})
-	<div class="w-full max-w-sm">
-		@components.Button(components.ButtonProps{
-			Action: "@post('/employees/create')",
-			Label:  "保存",
-			Class:  "bg-primary text-white rounded-md py-1.5 px-4 disabled:opacity-50 disabled:cursor-not-allowed",
-			Disabled: "!$employeeCreate.disabled",
-		}.WithDefaults())
+	<div class="grid gap-4">
+		@components.CreateForm(components.FormProps{
+			SaveAction: "@post('/employees/create')",
+		}) {
+			@components.InputLabel(components.InputLabelProps{
+				Label: components.LabelProps{
+					Label:     "名前",
+					ErrorBind: "$employeeCreate.errs.name",
+				},
+				Input: components.InputProps{
+					ID:           "createName",
+					Placeholder:  "例: 山田 太郎",
+					Bind:         "employeeCreate.name",
+					ValidatePath: "@post('/employees/validate?mode=create')",
+					Required:     true,
+				},
+			})
+			@components.InputLabel(components.InputLabelProps{
+				Label: components.LabelProps{
+					Label:     "メールアドレス",
+					ErrorBind: "$employeeCreate.errs.email",
+				},
+				Input: components.InputProps{
+					ID:           "createEmail",
+					Placeholder:  "例: example@example.com",
+					Bind:         "employeeCreate.email",
+					ValidatePath: "@post('/employees/validate?mode=create')",
+					Required:     true,
+				},
+			})
+		}
 	</div>
 }
