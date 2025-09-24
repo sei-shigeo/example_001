@@ -20,6 +20,7 @@ func NewHandler(database *db.DB) *Handler {
 func (h *Handler) Employees(w http.ResponseWriter, r *http.Request) {
 	// データベースから従業員データを取得
 	ctx := r.Context()
+
 	employees, err := h.DB.Queries.GetEmployees(ctx)
 	if err != nil {
 		http.Error(w, "従業員データの取得に失敗しました", http.StatusInternalServerError)

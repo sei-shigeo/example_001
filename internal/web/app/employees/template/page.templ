@@ -12,10 +12,11 @@ type Props struct {
 }
 
 templ (p Props) EmployeesPage() {
-	<main class="flex">
+	<main id="employeesPage" class="flex">
 		// Employees main container
 		<div class="flex-1 bg-blue-300 p-4">
 			<h1>{ p.Title }</h1>
+			<h1 data-text="$title"></h1>
 			// Create employee button
 			<button
 				id="createEmployeeButton"
