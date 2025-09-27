@@ -11,15 +11,14 @@ import templruntime "github.com/a-h/templ/runtime"
 import (
 	"fmt"
 	"project/internal/db"
-	"strings"
 )
 
 type Props struct {
-	Employees []*db.Employee
+	Customers []*db.Customer
 	Title     string
 }
 
-func (p Props) EmployeesPage() templ.Component {
+func (p Props) CustomerPage() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -40,43 +39,43 @@ func (p Props) EmployeesPage() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<main id=\"employeesPage\" class=\"flex\"><div class=\"flex-1 bg-blue-300 p-4\"><h1>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<main id=\"customersPage\" class=\"flex\"><div class=\"flex-1 bg-blue-300 p-4\"><h1>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(p.Title)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/app/employees/template/page.templ`, Line: 18, Col: 16}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/app/customer/template/page.templ`, Line: 16, Col: 16}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</h1><button id=\"createEmployeeButton\" class=\"bg-primary text-white rounded-md py-1.5 px-4 inline-flex items-center gap-2\" type=\"button\" data-on-click=\"$createEmployeeForm = !$createEmployeeForm\" data-on-click__once=\"@get('/employees/create')\"><span data-text=\"$createEmployeeForm ? '閉じる' : '追加'\"></span></button><div id=\"createEmployeeForm\" data-show=\"$createEmployeeForm\" style=\"display: none;\"></div><div data-signals=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</h1><button id=\"createCustomerButton\" class=\"bg-primary text-white rounded-md py-1.5 px-4 inline-flex items-center gap-2\" type=\"button\" data-on-click=\"$createCustomerForm = !$createCustomerForm\" data-on-click__once=\"@get('/customers/create')\"><span data-text=\"$createCustomerForm ? '閉じる' : '追加'\"></span></button><div id=\"createCustomerForm\" data-show=\"$createCustomerForm\" style=\"display: none;\"></div><div data-signals=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var3 string
-		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("{employeesCount: %d}", len(p.Employees)))
+		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("{customersCount: %d}", len(p.Customers)))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/app/employees/template/page.templ`, Line: 32, Col: 76}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/app/customer/template/page.templ`, Line: 30, Col: 76}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "\"><p data-text=\"$employeesCount\"></p><div id=\"employeesList\" class=\"grid gap-2 grid-cols-[repeat(auto-fill,minmax(300px,1fr))]\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "\"><p data-text=\"$customersCount\"></p><div id=\"customersList\" class=\"grid gap-2 grid-cols-[repeat(auto-fill,minmax(300px,1fr))]\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		for _, emp := range p.Employees {
-			templ_7745c5c3_Err = EmployeeOne(emp).Render(ctx, templ_7745c5c3_Buffer)
+		for _, customer := range p.Customers {
+			templ_7745c5c3_Err = CustomerOne(customer).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</div></div></div><div id=\"editEmployeeForm\" class=\"w-auto bg-gray-300 p-4\" data-show=\"$editEmployeeForm\" style=\"display: none;\"></div></main>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</div></div></div><div id=\"editCustomerForm\" class=\"w-auto bg-gray-300 p-4\" data-show=\"$editCustomerForm\" style=\"display: none;\"></div></main>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -84,16 +83,7 @@ func (p Props) EmployeesPage() templ.Component {
 	})
 }
 
-// getFirstLetter は名前の最初の文字を大文字にして返す
-func getFirstLetter(name string) string {
-	if name == "" {
-		return "?"
-	}
-	return strings.ToUpper(string([]rune(name)[0]))
-}
-
-// EmployeeOne は従業員を表示します
-func EmployeeOne(emp *db.Employee) templ.Component {
+func CustomerOne(customer *db.Customer) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -119,9 +109,9 @@ func EmployeeOne(emp *db.Employee) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var5 string
-		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("employee-%d", emp.ID))
+		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("customer-%d", customer.ID))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/app/employees/template/page.templ`, Line: 57, Col: 45}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/app/customer/template/page.templ`, Line: 45, Col: 50}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 		if templ_7745c5c3_Err != nil {
@@ -132,67 +122,54 @@ func EmployeeOne(emp *db.Employee) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var6 string
-		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("$currentEditId === %[1]d ? ($editEmployeeForm = true) : (@get('/employees/edit/%[1]d'), $currentEditId = %[1]d)", emp.ID))
+		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("$currentEditId === %[1]d ? ($editCustomerForm = true) : (@get('/customers/edit/%[1]d'), $currentEditId = %[1]d)", customer.ID))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/app/employees/template/page.templ`, Line: 60, Col: 153}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/app/customer/template/page.templ`, Line: 46, Col: 219}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "\"><div class=\"w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center border\"><span class=\"text-sm font-medium\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "\"><div class=\"flex-1 overflow-hidden\"><span>name:</span><p class=\"flex-1 truncate\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var7 string
-		templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(getFirstLetter(emp.Name))
+		templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(customer.Name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/app/employees/template/page.templ`, Line: 64, Col: 64}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/app/customer/template/page.templ`, Line: 49, Col: 46}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</span></div><div class=\"flex-1 overflow-x-hidden\"><div class=\"flex gap-1\"><span>name:</span><p class=\"flex-1 truncate\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</p></div><div class=\"flex gap-1\"><span>email:</span><p class=\"flex-1 truncate\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var8 string
-		templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(emp.Name)
+		templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(customer.Email)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/app/employees/template/page.templ`, Line: 71, Col: 42}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/app/customer/template/page.templ`, Line: 54, Col: 47}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "</p></div><div class=\"flex gap-1\"><span>email:</span><p class=\"flex-1 truncate\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "</p></div></div><button class=\"p-2 hover:bg-gray-200 rounded-md\" data-on-click=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var9 string
-		templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(emp.Email)
+		templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("@delete('/customers/delete/%d'); $customersCount--", customer.ID))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/app/employees/template/page.templ`, Line: 76, Col: 43}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/app/customer/template/page.templ`, Line: 60, Col: 97}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "</p></div></div></div><button class=\"p-2 hover:bg-gray-200 rounded-md\" data-on-click=\"")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		var templ_7745c5c3_Var10 string
-		templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("@delete('/employees/delete/%d'); $employeesCount--", emp.ID))
-		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/app/employees/template/page.templ`, Line: 83, Col: 92}
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "\"><span class=\"icon-[heroicons--trash] w-4 h-4\"></span></button></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "\"><span class=\"icon-[heroicons--trash] w-4 h-4\"></span></button></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

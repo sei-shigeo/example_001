@@ -4,6 +4,7 @@ type FormProps struct {
 	CloseAction string // 閉じるボタンのアクション
 	SaveAction  string // 保存ボタンのアクション
 	Disabled    string // 保存ボタンのdisabled条件
+	ButtonProps
 }
 
 templ EditForm(p FormProps) {
@@ -30,10 +31,6 @@ templ CreateForm(p FormProps) {
 		{ children... }
 	</div>
 	<div>
-		@Button(ButtonProps{
-			Action:   p.SaveAction,
-			Label:    "保存",
-			Disabled: p.Disabled,
-		})
+		@Button(p.ButtonProps)
 	</div>
 }

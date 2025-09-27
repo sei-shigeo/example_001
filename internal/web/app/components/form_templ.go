@@ -12,6 +12,7 @@ type FormProps struct {
 	CloseAction string // 閉じるボタンのアクション
 	SaveAction  string // 保存ボタンのアクション
 	Disabled    string // 保存ボタンのdisabled条件
+	ButtonProps
 }
 
 func EditForm(p FormProps) templ.Component {
@@ -107,11 +108,7 @@ func CreateForm(p FormProps) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = Button(ButtonProps{
-			Action:   p.SaveAction,
-			Label:    "保存",
-			Disabled: p.Disabled,
-		}).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = Button(p.ButtonProps).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

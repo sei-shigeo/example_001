@@ -4,9 +4,7 @@ import "project/internal/web/app/components"
 
 templ CreateVehicleForm() {
 	<div class="grid gap-4">
-		@components.CreateForm(components.FormProps{
-			SaveAction: "@post('/vehicles/create')",
-		}) {
+		<div>
 			@components.InputLabel(components.InputLabelProps{
 				Label: components.LabelProps{
 					Label:     "車両番号",
@@ -20,6 +18,12 @@ templ CreateVehicleForm() {
 					Required:     true,
 				},
 			})
-		}
+		</div>
+		@components.Button(components.ButtonProps{
+			Action: "@post('/vehicles/create')",
+			Label:  "保存",
+			Class:  "bg-primary text-white rounded-md py-1.5 px-4 disabled:opacity-50",
+			Disabled: "$vehiclesCreate.disabled = Object.values($vehiclesCreate.errs).some(err => err !== '')",
+		})
 	</div>
 }

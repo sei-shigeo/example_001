@@ -2,41 +2,41 @@ package template
 
 import "project/internal/web/app/components"
 
-templ CreateEmployee() {
+templ CreateCustomer() {
 	<div class="grid gap-4">
 		<div>
 			@components.InputLabel(components.InputLabelProps{
 				Label: components.LabelProps{
 					Label:     "名前",
-					ErrorBind: "$employeeCreate.errs.name",
+					ErrorBind: "$customerCreate.errs.name",
 				},
 				Input: components.InputProps{
 					ID:           "createName",
-					Placeholder:  "例: 山田 太郎",
-					Bind:         "employeeCreate.name",
-					ValidatePath: "@post('/employees/validate?mode=create')",
+					Placeholder:  "例: 株式会社 テスト",
+					Bind:         "customerCreate.name",
+					ValidatePath: "@post('/customers/validate?mode=create')",
 					Required:     true,
 				},
 			})
 			@components.InputLabel(components.InputLabelProps{
 				Label: components.LabelProps{
 					Label:     "メールアドレス",
-					ErrorBind: "$employeeCreate.errs.email",
+					ErrorBind: "$customerCreate.errs.email",
 				},
 				Input: components.InputProps{
 					ID:           "createEmail",
-					Placeholder:  "例: example@example.com",
-					Bind:         "employeeCreate.email",
-					ValidatePath: "@post('/employees/validate?mode=create')",
+					Placeholder:  "例: test@example.com",
+					Bind:         "customerCreate.email",
+					ValidatePath: "@post('/customers/validate?mode=create')",
 					Required:     true,
 				},
 			})
 		</div>
 		@components.Button(components.ButtonProps{
-			Action:   "@post('/employees/create'); $employeesCount++",
+			Action:   "@post('/customers/create'); $customersCount++",
 			Label:    "保存",
 			Class:    "bg-primary text-white rounded-md py-1.5 px-4 disabled:opacity-50",
-			Disabled: "$employeeCreate.disabled = Object.values($employeeCreate.errs).some(err => err !== '')",
+			Disabled: "$customerCreate.disabled = Object.values($customerCreate.errs).some(err => err !== '')",
 		})
 	</div>
 }

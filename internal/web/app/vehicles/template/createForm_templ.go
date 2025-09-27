@@ -31,47 +31,40 @@ func CreateVehicleForm() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"grid gap-4\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"grid gap-4\"><div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Var2 := templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
-			templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
-			templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
-			if !templ_7745c5c3_IsBuffer {
-				defer func() {
-					templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
-					if templ_7745c5c3_Err == nil {
-						templ_7745c5c3_Err = templ_7745c5c3_BufErr
-					}
-				}()
-			}
-			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = components.InputLabel(components.InputLabelProps{
-				Label: components.LabelProps{
-					Label:     "車両番号",
-					ErrorBind: "$vehiclesCreate.errs.number",
-				},
-				Input: components.InputProps{
-					ID:           "createNumber",
-					Placeholder:  "例: 1234",
-					Bind:         "vehiclesCreate.number",
-					ValidatePath: "@post('/vehicles/validate?mode=create')",
-					Required:     true,
-				},
-			}).Render(ctx, templ_7745c5c3_Buffer)
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			return nil
-		})
-		templ_7745c5c3_Err = components.CreateForm(components.FormProps{
-			SaveAction: "@post('/vehicles/create')",
-		}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = components.InputLabel(components.InputLabelProps{
+			Label: components.LabelProps{
+				Label:     "車両番号",
+				ErrorBind: "$vehiclesCreate.errs.number",
+			},
+			Input: components.InputProps{
+				ID:           "createNumber",
+				Placeholder:  "例: 1234",
+				Bind:         "vehiclesCreate.number",
+				ValidatePath: "@post('/vehicles/validate?mode=create')",
+				Required:     true,
+			},
+		}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</div>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = components.Button(components.ButtonProps{
+			Action:   "@post('/vehicles/create')",
+			Label:    "保存",
+			Class:    "bg-primary text-white rounded-md py-1.5 px-4 disabled:opacity-50",
+			Disabled: "$vehiclesCreate.disabled = Object.values($vehiclesCreate.errs).some(err => err !== '')",
+		}).Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

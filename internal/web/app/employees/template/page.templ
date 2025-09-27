@@ -16,7 +16,6 @@ templ (p Props) EmployeesPage() {
 		// Employees main container
 		<div class="flex-1 bg-blue-300 p-4">
 			<h1>{ p.Title }</h1>
-			<h1 data-text="$title"></h1>
 			// Create employee button
 			<button
 				id="createEmployeeButton"
@@ -30,8 +29,9 @@ templ (p Props) EmployeesPage() {
 			// Create employee form
 			<div id="createEmployeeForm" data-show="$createEmployeeForm" style="display: none;"></div>
 			// Employees cards list
-			<div>
-				<p>{ len(p.Employees) }人</p>
+			<div data-signals={ fmt.Sprintf("{employeesCount: %d}", len(p.Employees)) }>
+				<p data-text="$employeesCount"></p>
+				// <p>{ len(p.Employees) }人</p>
 				<div id="employeesList" class="grid gap-2 grid-cols-[repeat(auto-fill,minmax(300px,1fr))]">
 					for _, emp := range p.Employees {
 						@EmployeeOne(emp)
@@ -77,9 +77,10 @@ templ EmployeeOne(emp *db.Employee) {
 				</div>
 			</div>
 		</div>
+		// Delete employee button
 		<button
 			class="p-2 hover:bg-gray-200 rounded-md"
-			data-on-click={ fmt.Sprintf("@delete('/employees/delete/%d')", emp.ID) }
+			data-on-click={ fmt.Sprintf("@delete('/employees/delete/%d'); $employeesCount--", emp.ID) }
 		>
 			<span class="icon-[heroicons--trash] w-4 h-4"></span>
 		</button>

@@ -1,0 +1,65 @@
+package template
+
+import (
+	"fmt"
+	"project/internal/db"
+)
+
+type Props struct {
+	Customers []*db.Customer
+	Title     string
+}
+
+templ (p Props) CustomerPage() {
+	<main id="customersPage" class="flex">
+		<div class="flex-1 bg-blue-300 p-4">
+			<h1>{ p.Title }</h1>
+			// Create customer button
+			<button
+				id="createCustomerButton"
+				class="bg-primary text-white rounded-md py-1.5 px-4 inline-flex items-center gap-2"
+				type="button"
+				data-on-click="$createCustomerForm = !$createCustomerForm"
+				data-on-click__once="@get('/customers/create')"
+			>
+				<span data-text="$createCustomerForm ? '閉じる' : '追加'"></span>
+			</button>
+			// Create customer form
+			<div id="createCustomerForm" data-show="$createCustomerForm" style="display: none;"></div>
+			// Customers cards list
+			<div data-signals={ fmt.Sprintf("{customersCount: %d}", len(p.Customers)) }>
+				<p data-text="$customersCount"></p>
+				<div id="customersList" class="grid gap-2 grid-cols-[repeat(auto-fill,minmax(300px,1fr))]">
+					for _, customer := range p.Customers {
+						@CustomerOne(customer)
+					}
+				</div>
+			</div>
+		</div>
+		// Edit customer form
+		<div id="editCustomerForm" class="w-auto bg-gray-300 p-4" data-show="$editCustomerForm" style="display: none;"></div>
+	</main>
+}
+
+templ CustomerOne(customer *db.Customer) {
+	<div id={ fmt.Sprintf("customer-%d", customer.ID) } class="border rounded-md p-2 flex items-center gap-4">
+		<div class="flex items-center gap-4 flex-1 overflow-x-hidden" data-on-click={ fmt.Sprintf("$currentEditId === %[1]d ? ($editCustomerForm = true) : (@get('/customers/edit/%[1]d'), $currentEditId = %[1]d)", customer.ID) }>
+			<div class="flex-1 overflow-hidden">
+				<span>name:</span>
+				<p class="flex-1 truncate">{ customer.Name }</p>
+			</div>
+			// Email field
+			<div class="flex gap-1">
+				<span>email:</span>
+				<p class="flex-1 truncate">{ customer.Email }</p>
+			</div>
+		</div>
+		// Delete customer button
+		<button
+			class="p-2 hover:bg-gray-200 rounded-md"
+			data-on-click={ fmt.Sprintf("@delete('/customers/delete/%d'); $customersCount--", customer.ID) }
+		>
+			<span class="icon-[heroicons--trash] w-4 h-4"></span>
+		</button>
+	</div>
+}

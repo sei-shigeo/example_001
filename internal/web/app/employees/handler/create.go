@@ -52,14 +52,18 @@ func (h *Handler) CreateEmployee(w http.ResponseWriter, r *http.Request) {
 	}
 
 	sse := datastar.NewSSE(w, r)
-
+	// 従業員を追加
 	sse.PatchElementTempl(
 		template.EmployeeOne(emp),
 		datastar.WithSelectorID("employeesList"),
 		datastar.WithModeAppend(),
 	)
 
+	// 従業員をクリア
 	sig.Create = models.Employee{}
+	// エラーをクリア
 	sig.Create.NewErrs()
+	// シグナルを更新
 	sse.MarshalAndPatchSignals(sig)
+
 }

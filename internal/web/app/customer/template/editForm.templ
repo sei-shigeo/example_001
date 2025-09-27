@@ -1,0 +1,44 @@
+package template
+
+import (
+	"fmt"
+	"project/internal/db"
+	"project/internal/web/app/components"
+)
+
+// UpdateCustomer は顧客を更新するフォームを表示します
+templ EditCustomerForm(customer *db.Customer) {
+	<div class="grid gap-4">
+		@components.EditForm(components.FormProps{
+			CloseAction: "$editCustomerForm = false",
+			SaveAction:  fmt.Sprintf("@patch('/customers/edit/%d')", customer.ID),
+		}) {
+			@components.InputLabel(components.InputLabelProps{
+				Label: components.LabelProps{
+					Label:     "名前",
+					ErrorBind: "$customerEdit.errs.name",
+				},
+				Input: components.InputProps{
+					ID:           "editName",
+					Placeholder:  "例: 山田 太郎",
+					Bind:         "customerEdit.name",
+					ValidatePath: "@post('/customers/validate?mode=edit')",
+					Required:     true,
+				},
+			})
+			@components.InputLabel(components.InputLabelProps{
+				Label: components.LabelProps{
+					Label:     "メールアドレス",
+					ErrorBind: "$customerEdit.errs.email",
+				},
+				Input: components.InputProps{
+					ID:           "editEmail",
+					Placeholder:  "例: yamada@example.com",
+					Bind:         "customerEdit.email",
+					ValidatePath: "@post('/customers/validate?mode=edit')",
+					Required:     true,
+				},
+			})
+		}
+	</div>
+}

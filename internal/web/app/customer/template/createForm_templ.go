@@ -10,7 +10,7 @@ import templruntime "github.com/a-h/templ/runtime"
 
 import "project/internal/web/app/components"
 
-func CreateEmployee() templ.Component {
+func CreateCustomer() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -38,13 +38,13 @@ func CreateEmployee() templ.Component {
 		templ_7745c5c3_Err = components.InputLabel(components.InputLabelProps{
 			Label: components.LabelProps{
 				Label:     "名前",
-				ErrorBind: "$employeeCreate.errs.name",
+				ErrorBind: "$customerCreate.errs.name",
 			},
 			Input: components.InputProps{
 				ID:           "createName",
-				Placeholder:  "例: 山田 太郎",
-				Bind:         "employeeCreate.name",
-				ValidatePath: "@post('/employees/validate?mode=create')",
+				Placeholder:  "例: 株式会社 テスト",
+				Bind:         "customerCreate.name",
+				ValidatePath: "@post('/customers/validate?mode=create')",
 				Required:     true,
 			},
 		}).Render(ctx, templ_7745c5c3_Buffer)
@@ -54,13 +54,13 @@ func CreateEmployee() templ.Component {
 		templ_7745c5c3_Err = components.InputLabel(components.InputLabelProps{
 			Label: components.LabelProps{
 				Label:     "メールアドレス",
-				ErrorBind: "$employeeCreate.errs.email",
+				ErrorBind: "$customerCreate.errs.email",
 			},
 			Input: components.InputProps{
 				ID:           "createEmail",
-				Placeholder:  "例: example@example.com",
-				Bind:         "employeeCreate.email",
-				ValidatePath: "@post('/employees/validate?mode=create')",
+				Placeholder:  "例: test@example.com",
+				Bind:         "customerCreate.email",
+				ValidatePath: "@post('/customers/validate?mode=create')",
 				Required:     true,
 			},
 		}).Render(ctx, templ_7745c5c3_Buffer)
@@ -72,10 +72,10 @@ func CreateEmployee() templ.Component {
 			return templ_7745c5c3_Err
 		}
 		templ_7745c5c3_Err = components.Button(components.ButtonProps{
-			Action:   "@post('/employees/create'); $employeesCount++",
+			Action:   "@post('/customers/create'); $customersCount++",
 			Label:    "保存",
 			Class:    "bg-primary text-white rounded-md py-1.5 px-4 disabled:opacity-50",
-			Disabled: "$employeeCreate.disabled = Object.values($employeeCreate.errs).some(err => err !== '')",
+			Disabled: "$customerCreate.disabled = Object.values($customerCreate.errs).some(err => err !== '')",
 		}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err

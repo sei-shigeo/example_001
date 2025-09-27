@@ -8,6 +8,16 @@ import (
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
+type Customer struct {
+	ID        int32              `json:"id"`
+	Name      string             `json:"name"`
+	Email     string             `json:"email"`
+	IsActive  bool               `json:"is_active"`
+	DeletedAt pgtype.Timestamptz `json:"deleted_at"`
+	CreatedAt pgtype.Timestamptz `json:"created_at"`
+	UpdatedAt pgtype.Timestamptz `json:"updated_at"`
+}
+
 type Employee struct {
 	ID        int32              `json:"id"`
 	Name      string             `json:"name"`

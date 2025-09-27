@@ -9,14 +9,19 @@ import (
 )
 
 type Querier interface {
+	CreateCustomer(ctx context.Context, arg *CreateCustomerParams) (*Customer, error)
 	CreateEmployee(ctx context.Context, arg *CreateEmployeeParams) (*Employee, error)
 	CreateVehicle(ctx context.Context, number string) (*Vehicle, error)
+	DeleteCustomer(ctx context.Context, id int32) error
 	DeleteEmployee(ctx context.Context, id int32) error
 	DeleteVehicle(ctx context.Context, id int32) error
+	GetCustomerByID(ctx context.Context, id int32) (*Customer, error)
+	GetCustomers(ctx context.Context) ([]*Customer, error)
 	GetEmployeeByID(ctx context.Context, id int32) (*Employee, error)
 	GetEmployees(ctx context.Context) ([]*Employee, error)
 	GetVehicleByID(ctx context.Context, id int32) (*Vehicle, error)
 	GetVehicles(ctx context.Context) ([]*Vehicle, error)
+	UpdateCustomer(ctx context.Context, arg *UpdateCustomerParams) (*Customer, error)
 	UpdateEmployee(ctx context.Context, arg *UpdateEmployeeParams) (*Employee, error)
 	UpdateVehicle(ctx context.Context, arg *UpdateVehicleParams) (*Vehicle, error)
 }
