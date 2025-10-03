@@ -12,7 +12,7 @@ import (
 const CreateCustomer = `-- name: CreateCustomer :one
 INSERT INTO customers (name, email)
 VALUES ($1, $2)
-RETURNING id, name, email, is_active, deleted_at, created_at, updated_at
+RETURNING id, name, email, phone, is_active, deleted_at, created_at, updated_at
 `
 
 type CreateCustomerParams struct {
@@ -27,6 +27,7 @@ func (q *Queries) CreateCustomer(ctx context.Context, arg *CreateCustomerParams)
 		&i.ID,
 		&i.Name,
 		&i.Email,
+		&i.Phone,
 		&i.IsActive,
 		&i.DeletedAt,
 		&i.CreatedAt,
@@ -46,7 +47,7 @@ func (q *Queries) DeleteCustomer(ctx context.Context, id int32) error {
 }
 
 const GetCustomerByID = `-- name: GetCustomerByID :one
-SELECT id, name, email, is_active, deleted_at, created_at, updated_at FROM customers
+SELECT id, name, email, phone, is_active, deleted_at, created_at, updated_at FROM customers
 WHERE id = $1
 `
 
@@ -57,6 +58,7 @@ func (q *Queries) GetCustomerByID(ctx context.Context, id int32) (*Customer, err
 		&i.ID,
 		&i.Name,
 		&i.Email,
+		&i.Phone,
 		&i.IsActive,
 		&i.DeletedAt,
 		&i.CreatedAt,
@@ -66,7 +68,7 @@ func (q *Queries) GetCustomerByID(ctx context.Context, id int32) (*Customer, err
 }
 
 const GetCustomers = `-- name: GetCustomers :many
-SELECT id, name, email, is_active, deleted_at, created_at, updated_at FROM customers
+SELECT id, name, email, phone, is_active, deleted_at, created_at, updated_at FROM customers
 ORDER BY id
 `
 
@@ -83,6 +85,7 @@ func (q *Queries) GetCustomers(ctx context.Context) ([]*Customer, error) {
 			&i.ID,
 			&i.Name,
 			&i.Email,
+			&i.Phone,
 			&i.IsActive,
 			&i.DeletedAt,
 			&i.CreatedAt,
@@ -102,7 +105,7 @@ const UpdateCustomer = `-- name: UpdateCustomer :one
 UPDATE customers
 SET name = $2, email = $3
 WHERE id = $1
-RETURNING id, name, email, is_active, deleted_at, created_at, updated_at
+RETURNING id, name, email, phone, is_active, deleted_at, created_at, updated_at
 `
 
 type UpdateCustomerParams struct {
@@ -118,6 +121,7 @@ func (q *Queries) UpdateCustomer(ctx context.Context, arg *UpdateCustomerParams)
 		&i.ID,
 		&i.Name,
 		&i.Email,
+		&i.Phone,
 		&i.IsActive,
 		&i.DeletedAt,
 		&i.CreatedAt,

@@ -1,0 +1,60 @@
+package layouts
+
+templ Base(title string, content templ.Component) {
+	<!DOCTYPE html>
+	<html lang="ja">
+		<head>
+			<meta charset="UTF-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+			<link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon"/>
+			<link href="/assets/css/output.css" rel="stylesheet"/>
+			<script defer type="module" src="/assets/js/datastar-proRC5.js"></script>
+			<script defer type="module" src="/assets/js/datastar-inspector.js"></script>
+			<title>{ title }</title>
+		</head>
+		<body>
+			<div class="flex h-screen bg-gray-100">
+				<div class="bg-red-300 w-64 p-4">
+					@SideBar()
+				</div>
+				<div class="flex-1">
+					@content
+				</div>
+			</div>
+		</body>
+		<datastar-inspector></datastar-inspector>
+	</html>
+}
+
+type SideBarMenu struct {
+	Icon  string
+	Label string
+	Link  string
+}
+
+var sideBarMenu = []SideBarMenu{
+	{Icon: "icon-[material-symbols--book-2-outline]", Label: "従業員情報", Link: "/employees"},
+	{Icon: "icon-[material-symbols--book-2-outline]", Label: "取引先情報", Link: "/customers"},
+	{Icon: "icon-[material-symbols--book-2-outline]", Label: "車両情報", Link: "/vehicles"},
+	{Icon: "icon-[material-symbols--book-2-outline]", Label: "受注情報", Link: "/order"},
+	{Icon: "icon-[material-symbols--book-2-outline]", Label: "配車情報", Link: "/dispatch"},
+	{Icon: "icon-[material-symbols--book-2-outline]", Label: "点呼記録簿登録", Link: "/attendance"},
+}
+
+templ SideBar() {
+	<div>
+		// logo
+		<h1>SideBar</h1>
+		// menu
+		<ul>
+			for _, menu := range sideBarMenu {
+				<li>
+					<div class="flex items-center gap-2 h-10">
+						<span class={ menu.Icon, "size-6" }></span>
+						<a href={ menu.Link }>{ menu.Label }</a>
+					</div>
+				</li>
+			}
+		</ul>
+	</div>
+}

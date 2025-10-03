@@ -8,6 +8,10 @@ CREATE TABLE IF NOT EXISTS vehicles (
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
+
+insert into vehicles (number) values ('豊田100か3258');
+insert into vehicles (number) values ('豊田100か3259');
+insert into vehicles (number) values ('豊田100か3260');
 -- 検索用インデックス
 CREATE INDEX IF NOT EXISTS idx_vehicles_number ON vehicles (number);
 -- +goose StatementEnd

@@ -40,6 +40,7 @@ func (config ServerConfig) SetupServer() (*http.Server, error) {
 	// 静的ファイルを提供
 	mux.Handle("/assets/", disableCacheInDevMode(config.DevMode, http.StripPrefix("/assets/", http.FileServer(http.Dir("assets")))))
 
+
 	if config.Routes != nil {
 		config.Routes(mux)
 	}

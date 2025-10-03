@@ -36,7 +36,7 @@ func Base(title string, content templ.Component) templ.Component {
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(title)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/app/layouts/app.templ`, Line: 13, Col: 17}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/app/views/layouts/app.templ`, Line: 13, Col: 17}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
@@ -66,6 +66,21 @@ func Base(title string, content templ.Component) templ.Component {
 	})
 }
 
+type SideBarMenu struct {
+	Icon  string
+	Label string
+	Link  string
+}
+
+var sideBarMenu = []SideBarMenu{
+	{Icon: "icon-[material-symbols--book-2-outline]", Label: "従業員情報", Link: "/employees"},
+	{Icon: "icon-[material-symbols--book-2-outline]", Label: "取引先情報", Link: "/customers"},
+	{Icon: "icon-[material-symbols--book-2-outline]", Label: "車両情報", Link: "/vehicles"},
+	{Icon: "icon-[material-symbols--book-2-outline]", Label: "受注情報", Link: "/order"},
+	{Icon: "icon-[material-symbols--book-2-outline]", Label: "配車情報", Link: "/dispatch"},
+	{Icon: "icon-[material-symbols--book-2-outline]", Label: "点呼記録簿登録", Link: "/attendance"},
+}
+
 func SideBar() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
@@ -87,7 +102,65 @@ func SideBar() templ.Component {
 			templ_7745c5c3_Var3 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "<div><h1>SideBar</h1><ul><li><div class=\"flex items-center gap-2 h-10\"><span class=\"icon-[material-symbols--book-2-outline] size-6\"></span> <a href=\"/employees\">従業員情報</a></div></li><li><div class=\"flex items-center gap-2 h-10\"><span class=\"icon-[material-symbols--book-2-outline] size-6\"></span> <a href=\"/customers\">取引先情報</a></div></li><li><div class=\"flex items-center gap-2 h-10\"><span class=\"icon-[material-symbols--book-2-outline] size-6\"></span> <a href=\"/vehicles\">車両情報</a></div></li><li><div class=\"flex items-center gap-2 h-10\"><span class=\"icon-[material-symbols--book-2-outline] size-6\"></span> <a href=\"/order\">受注情報</a></div></li><li><div class=\"flex items-center gap-2 h-10\"><span class=\"icon-[material-symbols--book-2-outline] size-6\"></span> <a href=\"/dispatch\">配車情報</a></div></li><li><div class=\"flex items-center gap-2 h-10\"><span class=\"icon-[material-symbols--book-2-outline] size-6\"></span> <a href=\"/attendance\">点呼記録簿登録</a></div></li></ul></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "<div><h1>SideBar</h1><ul>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		for _, menu := range sideBarMenu {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<li><div class=\"flex items-center gap-2 h-10\">")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var4 = []any{menu.Icon, "size-6"}
+			templ_7745c5c3_Err = templ.RenderCSSItems(ctx, templ_7745c5c3_Buffer, templ_7745c5c3_Var4...)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "<span class=\"")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var5 string
+			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(templ.CSSClasses(templ_7745c5c3_Var4).String())
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/app/views/layouts/app.templ`, Line: 1, Col: 0}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "\"></span> <a href=\"")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var6 templ.SafeURL
+			templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinURLErrs(menu.Link)
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/app/views/layouts/app.templ`, Line: 54, Col: 25}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "\">")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var7 string
+			templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(menu.Label)
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/web/app/views/layouts/app.templ`, Line: 54, Col: 40}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "</a></div></li>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "</ul></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

@@ -1,0 +1,54 @@
+package pages
+
+import "project/internal/db"
+
+templ Employees(employees []*db.Employee) {
+	<div class="p-4">
+		// 検索フォーム
+		<div class="flex items-center gap-2 p-2 rounded-md border border-gray-200">
+			<span class="icon-[mdi--magnify] text-gray-400 text-2xl flex-none"></span>
+			<input type="search" placeholder="従業員名を検索" name="search" class="flex-1">
+		</div>
+		// 従業員一覧
+		<div>
+			<h1>従業員一覧</h1>
+			if len(employees) == 0 {
+				<p>従業員が存在しません</p>
+			}
+			<div class="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4 overflow-hidden">
+				for _, employee := range employees {
+					<div class="flex items-center gap-2 p-2 rounded-md border border-gray-200 hover:border-blue-300 transition-all duration-300">
+						<div class="flex-none size-16 rounded-md bg-gray-200"></div>
+						<ul class="flex-1 overflow-hidden">
+							<li class="truncate flex items-center gap-2">
+								<span class="icon-[mdi--person-outline] text-sm text-gray-500"></span>
+								<span class="text-sm text-gray-500">
+									{ employee.Name }
+								</span>
+							</li>
+							<li class="truncate flex items-center gap-2">
+								<span class="icon-[mdi--email-outline] text-sm text-gray-500"></span>
+								<span class="text-sm text-gray-500">
+									{ employee.Email }
+								</span>
+							</li>
+							<li class="truncate flex items-center gap-2">
+								<span class="icon-[mdi--cellphone] text-sm text-gray-500"></span>
+								<span class="text-sm text-gray-500">
+									{ employee.Phone }
+								</span>
+							</li>
+						</ul>
+					</div>
+				}
+			</div>
+		</div>
+	</div>
+}
+
+templ EmployeeByID(employee *db.Employee) {
+	<div>
+		<h1>従業員詳細</h1>
+		<p>{ employee.Name }</p>
+	</div>
+}
