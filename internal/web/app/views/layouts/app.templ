@@ -14,7 +14,7 @@ templ Base(title string, content templ.Component) {
 		</head>
 		<body>
 			<div class="flex h-screen bg-gray-100">
-				<div class="bg-red-300 w-64 p-4">
+				<div class="w-46 p-4 border-r border-gray-200 text-nowrap overflow-hidden">
 					@SideBar()
 				</div>
 				<div class="flex-1">
@@ -33,27 +33,45 @@ type SideBarMenu struct {
 }
 
 var sideBarMenu = []SideBarMenu{
-	{Icon: "icon-[material-symbols--book-2-outline]", Label: "従業員情報", Link: "/employees"},
-	{Icon: "icon-[material-symbols--book-2-outline]", Label: "取引先情報", Link: "/customers"},
-	{Icon: "icon-[material-symbols--book-2-outline]", Label: "車両情報", Link: "/vehicles"},
-	{Icon: "icon-[material-symbols--book-2-outline]", Label: "受注情報", Link: "/order"},
-	{Icon: "icon-[material-symbols--book-2-outline]", Label: "配車情報", Link: "/dispatch"},
-	{Icon: "icon-[material-symbols--book-2-outline]", Label: "点呼記録簿登録", Link: "/attendance"},
+	{Icon: "icon-[mdi--person-outline]", Label: "従業員情報", Link: "/employees"},
+	{Icon: "icon-[mdi--office-building-outline]", Label: "取引先情報", Link: "/customers"},
+	{Icon: "icon-[mdi--truck-outline]", Label: "車両情報", Link: "/vehicles"},
+	{Icon: "icon-[mdi--book-open-variant-outline]", Label: "受注情報", Link: "/order"},
+	{Icon: "icon-[mdi--book-open-variant-outline]", Label: "配車情報", Link: "/dispatch"},
+	{Icon: "icon-[mdi--book-open-variant-outline]", Label: "点呼記録簿登録", Link: "/attendance"},
+}
+
+var sideBarMenuOptions = []SideBarMenu{
+	{Icon: "icon-[mdi--cog-outline]", Label: "設定", Link: "/settings"},
+	{Icon: "icon-[mdi--help-circle-outline]", Label: "ヘルプ", Link: "/help"},
+	{Icon: "icon-[mdi--logout]", Label: "ログアウト", Link: "/logout"},
 }
 
 templ SideBar() {
-	<div>
-		// logo
-		<h1>SideBar</h1>
+	<div class="">
+		<div class="flex items-center justify-between mb-2">
+			<button class="icon-[mdi--menu] text-2xl"></button>
+		</div>
 		// menu
-		<ul>
+		<ul class="">
 			for _, menu := range sideBarMenu {
-				<li>
+				<li class="">
 					<div class="flex items-center gap-2 h-10">
-						<span class={ menu.Icon, "size-6" }></span>
+						<span class={ menu.Icon, "text-xl text-gray-500" }></span>
 						<a href={ menu.Link }>{ menu.Label }</a>
 					</div>
 				</li>
+			}
+		</ul>
+		// menu options
+		<ul class="mt-4 border-t border-gray-200 pt-2">
+		for _, menu := range sideBarMenuOptions {
+				<li>
+				<div class="flex items-center gap-2 h-10">
+					<span class={ menu.Icon, "text-xl text-gray-500" }></span>
+					<a href={ menu.Link }>{ menu.Label }</a>
+				</div>
+			</li>
 			}
 		</ul>
 	</div>
