@@ -7,13 +7,13 @@ SELECT * FROM employees
 WHERE id = $1;
 
 -- name: CreateEmployee :one
-INSERT INTO employees (name, email)
-VALUES ($1, $2)
+INSERT INTO employees (name, email, phone)
+VALUES ($1, $2, $3)
 RETURNING *;
 
 -- name: UpdateEmployee :one
 UPDATE employees
-SET name = $2, email = $3
+SET name = $2, email = $3, phone = $4
 WHERE id = $1
 RETURNING *;
 

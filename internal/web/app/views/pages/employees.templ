@@ -2,9 +2,25 @@ package pages
 
 import "project/internal/db"
 import "fmt"
+import "github.com/starfederation/datastar-go/datastar"
+
+type EmployeesSignal struct {
+	Create     EmployeesForm    `json:"create"`
+	Edit       EmployeesForm    `json:"edit"`
+	Validation ValidationErrors `json:"validation"`
+}
+
+type EmployeesForm struct {
+	Name  string `json:"name"`
+	Email string `json:"email"`
+	Phone string `json:"phone"`
+	IsShow bool   `json:"isShow"`
+}
+
+type ValidationErrors map[string]string
 
 templ Employees(employees []*db.Employee) {
-	<div class="flex h-full">
+	<div class="flex h-full" data-signals={ templ.JSONString(&EmployeesSignal{}) }>
 		<div class="p-4 flex-1 flex flex-col gap-4">
 			// header
 			<div class="flex items-center gap-2 justify-between">
@@ -15,11 +31,10 @@ templ Employees(employees []*db.Employee) {
 				</div>
 				// 新規登録ボタン
 				<div class="flex items-center">
-					<button class="bg-blue-400 hover:bg-blue-500 transition-all duration-300 text-white px-4 py-2 rounded-md text-nowrap">新規登録</button>
+					<button data-on-click="$create.isShow = !$create.isShow" class="bg-blue-400 hover:bg-blue-500 transition-all duration-300 text-white px-4 py-2 rounded-md text-nowrap">新規登録</button>
 				</div>
 			</div>
-			<div>
-				// <div id="employeeCreateForm"></div>
+			<div data-show="$create.isShow">
 				@EmployeeCreate()
 			</div>
 			// 従業員一覧
@@ -28,39 +43,44 @@ templ Employees(employees []*db.Employee) {
 				if len(employees) == 0 {
 					<p>従業員が存在しません</p>
 				}
-				<div class="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4 overflow-hidden">
+				<div id="employeeList" class="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4 overflow-hidden">
 					for _, employee := range employees {
-						<div class="flex items-center gap-2 p-2 rounded-md border border-gray-200 hover:border-blue-300 transition-all duration-300">
-							<div class="flex-none size-16 rounded-md bg-gray-200"></div>
-							<ul class="flex-1 overflow-hidden">
-								<li class="truncate flex items-center gap-2">
-									<span class="icon-[mdi--person-outline] text-sm text-gray-500"></span>
-									<span class="text-sm text-gray-500">
-										{ employee.Name }
-									</span>
-								</li>
-								<li class="truncate flex items-center gap-2">
-									<span class="icon-[mdi--email-outline] text-sm text-gray-500"></span>
-									<span class="text-sm text-gray-500">
-										{ employee.Email }
-									</span>
-								</li>
-								<li class="truncate flex items-center gap-2">
-									<span class="icon-[mdi--cellphone] text-sm text-gray-500"></span>
-									<span class="text-sm text-gray-500">
-										{ employee.Phone }
-									</span>
-								</li>
-							</ul>
-						</div>
+						@EmployeesList(employee)
 					}
 				</div>
 			</div>
 		</div>
-		<div class="p-4 border-l border-gray-200 w-96">
-			// <div id="employeeEditForm">test</div>
-			@EmployeeByID(employees[0])
-		</div>
+		<div data-show="$edit.isShow" id="employeeEditForm" class="p-4 border-l border-gray-200 w-96"></div>
+	</div>
+}
+
+templ EmployeesList(employee *db.Employee) {
+	<div
+		id={fmt.Sprintf("employee-%d", employee.ID)}
+		data-on-click={ datastar.GetSSE("/employees/%d", employee.ID) + "; $edit.isShow = true" }
+		class="flex items-center gap-2 p-2 rounded-md border border-gray-200 hover:border-blue-300 transition-all duration-300"
+	>
+		<div class="flex-none size-16 rounded-md bg-gray-200"></div>
+		<ul class="flex-1 overflow-hidden">
+			<li class="truncate flex items-center gap-2">
+				<span class="icon-[mdi--person-outline] text-sm text-gray-500"></span>
+				<span class="text-sm text-gray-500">
+					{ employee.Name }
+				</span>
+			</li>
+			<li class="truncate flex items-center gap-2">
+				<span class="icon-[mdi--email-outline] text-sm text-gray-500"></span>
+				<span class="text-sm text-gray-500">
+					{ employee.Email }
+				</span>
+			</li>
+			<li class="truncate flex items-center gap-2">
+				<span class="icon-[mdi--cellphone] text-sm text-gray-500"></span>
+				<span class="text-sm text-gray-500">
+					{ employee.Phone }
+				</span>
+			</li>
+		</ul>
 	</div>
 }
 
@@ -69,34 +89,34 @@ templ EmployeeCreate() {
 	<div id="employeeCreateForm" class="flex flex-col gap-4">
 		<label class="block text-sm font-medium text-gray-700">
 			<span>名前</span>
-			<input type="text" data-bind="createName" placeholder="名前" class="border border-gray-300 rounded-md p-2 w-full"/>
+			<input type="text" data-bind="create.name" placeholder="名前" class="border border-gray-300 rounded-md p-2 w-full"/>
 		</label>
 		<label class="block text-sm font-medium text-gray-700">
 			<span>メール</span>
-			<input type="text" data-bind="createEmail" placeholder="メール" class="border border-gray-300 rounded-md p-2 w-full"/>
+			<input type="text" data-bind="create.email" placeholder="メール" class="border border-gray-300 rounded-md p-2 w-full"/>
 		</label>
 		<label class="block text-sm font-medium text-gray-700">
 			<span>電話番号</span>
-			<input type="text" data-bind="createPhone" placeholder="電話番号" class="border border-gray-300 rounded-md p-2 w-full"/>
+			<input type="text" data-bind="create.phone" placeholder="電話番号" class="border border-gray-300 rounded-md p-2 w-full"/>
 		</label>
-		<div class="flex items-center gap-2 mt-2">
-			<button type="submit" class="bg-blue-400 hover:bg-blue-500 transition-all duration-300 text-white px-4 py-2 rounded-md w-full cursor-pointer">保存</button>
+		<div class="flex items-center gap-2 mt-2 w-1/2">
+			<button type="submit" data-on-click="@post('/employees/create')" class="bg-blue-400 hover:bg-blue-500 transition-all duration-300 text-white px-4 py-2 rounded-md w-full cursor-pointer">保存</button>
 			<button type="reset" class="bg-gray-400 hover:bg-gray-500 transition-all duration-300 text-white px-4 py-2 rounded-md w-full cursor-pointer">キャンセル</button>
 		</div>
 	</div>
 }
 
 // 編集フォーム
-templ EmployeeByID(employee *db.Employee) {
+templ EmployeeEdit(employee *db.Employee) {
 	<div id={ fmt.Sprintf("employeeEditForm-%d", employee.ID) } class="flex flex-col gap-4">
 		// action buttons
 		<div class="flex items-center justify-between mb-2">
 			<div class="flex items-center gap-2 p-2 rounded-md hover:bg-gray-300 transition-all duration-300 cursor-pointer">
-				<button class="icon-[mdi--close] text-2xl"></button>
+				<button data-on-click="$edit.isShow = false" class="icon-[mdi--close] text-2xl"></button>
 			</div>
 			<div class="flex items-center gap-2">
 				<button class="bg-blue-400 hover:bg-blue-500 transition-all duration-300 text-white px-4 py-2 rounded-md">編集</button>
-				<button class="bg-gray-400 hover:bg-gray-500 transition-all duration-300 text-white px-4 py-2 rounded-md">削除</button>
+				<button data-on-click={ datastar.DeleteSSE("/employees/delete/%d", employee.ID) } class="bg-gray-400 hover:bg-gray-500 transition-all duration-300 text-white px-4 py-2 rounded-md">削除</button>
 			</div>
 		</div>
 		// image
@@ -107,18 +127,18 @@ templ EmployeeByID(employee *db.Employee) {
 		<div class="grid gap-4">
 			<label class="block text-sm font-medium text-gray-700">
 				<span>名前</span>
-				<input type="text" data-bind="editName" value={ employee.Name } placeholder={ employee.Name} class="border border-gray-300 rounded-md p-2 w-full text-gray-500"/>
+				<input type="text" data-bind="edit.name" value={ employee.Name } placeholder={ employee.Name } class="border border-gray-300 rounded-md p-2 w-full text-gray-500"/>
 			</label>
 			<label class="block text-sm font-medium text-gray-700">
 				<span>メール</span>
-				<input type="email" data-bind="editEmail" value={ employee.Email } placeholder={ employee.Email} class="border border-gray-300 rounded-md p-2 w-full text-gray-500"/>
+				<input type="email" data-bind="edit.email" value={ employee.Email } placeholder={ employee.Email } class="border border-gray-300 rounded-md p-2 w-full text-gray-500"/>
 			</label>
 			<label class="block text-sm font-medium text-gray-700">
 				<span>電話番号</span>
-				<input type="tel" data-bind="editPhone" value={ employee.Phone } placeholder={ employee.Phone} class="border border-gray-300 rounded-md p-2 w-full text-gray-500"/>
+				<input type="tel" data-bind="edit.phone" value={ employee.Phone } placeholder={ employee.Phone } class="border border-gray-300 rounded-md p-2 w-full text-gray-500"/>
 			</label>
 			<div class="flex items-center gap-2">
-				<button type="submit" class="bg-blue-400 hover:bg-blue-500 transition-all duration-300 text-white px-4 py-2 rounded-md w-full cursor-pointer">保存</button>
+				<button data-on-click={ datastar.PatchSSE("/employees/update/%d", employee.ID) } class="bg-blue-400 hover:bg-blue-500 transition-all duration-300 text-white px-4 py-2 rounded-md w-full cursor-pointer">保存</button>
 			</div>
 		</div>
 	</div>

@@ -10,18 +10,19 @@ import (
 )
 
 const CreateEmployee = `-- name: CreateEmployee :one
-INSERT INTO employees (name, email)
-VALUES ($1, $2)
+INSERT INTO employees (name, email, phone)
+VALUES ($1, $2, $3)
 RETURNING id, name, email, phone, is_active, deleted_at, created_at, updated_at
 `
 
 type CreateEmployeeParams struct {
 	Name  string `json:"name"`
 	Email string `json:"email"`
+	Phone string `json:"phone"`
 }
 
 func (q *Queries) CreateEmployee(ctx context.Context, arg *CreateEmployeeParams) (*Employee, error) {
-	row := q.db.QueryRow(ctx, CreateEmployee, arg.Name, arg.Email)
+	row := q.db.QueryRow(ctx, CreateEmployee, arg.Name, arg.Email, arg.Phone)
 	var i Employee
 	err := row.Scan(
 		&i.ID,
@@ -103,7 +104,7 @@ func (q *Queries) GetEmployees(ctx context.Context) ([]*Employee, error) {
 
 const UpdateEmployee = `-- name: UpdateEmployee :one
 UPDATE employees
-SET name = $2, email = $3
+SET name = $2, email = $3, phone = $4
 WHERE id = $1
 RETURNING id, name, email, phone, is_active, deleted_at, created_at, updated_at
 `
@@ -112,10 +113,16 @@ type UpdateEmployeeParams struct {
 	ID    int32  `json:"id"`
 	Name  string `json:"name"`
 	Email string `json:"email"`
+	Phone string `json:"phone"`
 }
 
 func (q *Queries) UpdateEmployee(ctx context.Context, arg *UpdateEmployeeParams) (*Employee, error) {
-	row := q.db.QueryRow(ctx, UpdateEmployee, arg.ID, arg.Name, arg.Email)
+	row := q.db.QueryRow(ctx, UpdateEmployee,
+		arg.ID,
+		arg.Name,
+		arg.Email,
+		arg.Phone,
+	)
 	var i Employee
 	err := row.Scan(
 		&i.ID,
